@@ -1,0 +1,255 @@
+/* =========================================
+   MODAL OVERLAY
+========================================= */
+
+.common-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  background: rgba(15, 23, 42, 0.55);
+
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+
+  animation: modalOverlayIn 0.2s ease-out;
+}
+
+
+/* =========================================
+   MODAL
+========================================= */
+
+.common-modal {
+  width: 100%;
+  max-width: var(--modal-width, 760px);
+
+  max-height: calc(100vh - 48px);
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  animation: modalIn 0.2s ease-out;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.common-modal-header {
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 72px;
+
+  padding: 18px 24px;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  background: #ffffff;
+}
+
+
+/* Title */
+
+.common-modal-title-wrapper {
+  min-width: 0;
+}
+
+.common-modal-header h2 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+
+/* =========================================
+   CLOSE BUTTON
+========================================= */
+
+.common-modal-close {
+  flex-shrink: 0;
+
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-left: 16px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: transparent;
+
+  color: #6b7280;
+
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.common-modal-close:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.common-modal-close:active {
+  transform: scale(0.95);
+}
+
+.common-modal-close:focus-visible {
+  outline: 3px solid rgba(59, 130, 246, 0.2);
+  outline-offset: 1px;
+}
+
+
+/* =========================================
+   BODY
+========================================= */
+
+.common-modal-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 24px;
+  background: #ffffff;
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+}
+
+
+/* Chrome / Edge scrollbar */
+
+.common-modal-body::-webkit-scrollbar {
+  width: 7px;
+}
+
+.common-modal-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.common-modal-body::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 10px;
+}
+
+.common-modal-body::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes modalOverlayIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+  .common-modal-overlay {
+    padding: 12px;
+    align-items: center;
+  }
+
+  .common-modal {
+    max-height: calc(100vh - 24px);
+
+    border-radius: 14px;
+  }
+
+  .common-modal-header {
+    min-height: 64px;
+    padding: 16px 18px;
+  }
+
+  .common-modal-header h2 {
+    font-size: 17px;
+  }
+
+  .common-modal-body {
+    padding: 18px;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .common-modal-overlay {
+    padding: 0;
+  }
+
+  .common-modal {
+    width: 100%;
+    max-width: none;
+
+    height: 100vh;
+    max-height: 100vh;
+
+    border-radius: 0;
+  }
+
+  .common-modal-header {
+    padding: 15px 16px;
+  }
+
+  .common-modal-body {
+    padding: 16px;
+  }
+}

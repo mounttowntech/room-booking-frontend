@@ -1,0 +1,651 @@
+/* =========================================================
+   DASHBOARD PAGE
+========================================================= */
+
+.dashboard-page {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   DASHBOARD BANNER
+========================================================= */
+
+.dashboard-banner {
+  width: 100%;
+  min-height: 128px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 25px;
+
+  box-sizing: border-box;
+
+  border-radius: 22px;
+
+  background: linear-gradient(
+    135deg,
+    #0878e8 0%,
+    #08b4c8 100%
+  );
+
+  color: #ffffff;
+
+  margin-bottom: 20px;
+}
+
+.dashboard-banner-content h1 {
+  margin: 0 0 10px;
+
+  font-size: 29px;
+
+  font-weight: 700;
+
+  letter-spacing: -0.5px;
+}
+
+.dashboard-banner-content p {
+  margin: 0;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+
+  color: rgba(255, 255, 255, 0.92);
+}
+
+
+/* =========================================================
+   NEW BOOKING BUTTON
+========================================================= */
+
+.new-booking-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 11px 17px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: #071d35;
+
+  color: #ffffff;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  transition: all 0.2s ease;
+}
+
+.new-booking-btn span {
+  font-size: 18px;
+
+  line-height: 1;
+}
+
+.new-booking-btn:hover {
+  background: #0d2947;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   SUMMARY CARDS
+========================================================= */
+
+.dashboard-stats {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 16px;
+
+  margin-bottom: 18px;
+}
+
+
+.stat-card {
+  min-height: 112px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 18px;
+
+  background: #ffffff;
+
+  border: 1px solid #e1e6ec;
+
+  border-radius: 17px;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 4px 15px rgba(25, 45, 70, 0.04);
+}
+
+
+.stat-content {
+  min-width: 0;
+}
+
+.stat-title {
+  display: block;
+
+  margin-bottom: 6px;
+
+  font-size: 13px;
+
+  color: #65748b;
+}
+
+.stat-content h2 {
+  margin: 0 0 5px;
+
+  font-size: 25px;
+
+  line-height: 1;
+
+  font-weight: 700;
+
+  color: #101828;
+}
+
+.stat-description {
+  display: block;
+
+  font-size: 11px;
+
+  color: #738197;
+}
+
+
+/* =========================================================
+   STAT ICON
+========================================================= */
+
+.stat-icon {
+  width: 45px;
+  height: 45px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  background: #edf6ff;
+
+  color: #0878e8;
+
+  font-size: 20px;
+}
+
+
+/* =========================================================
+   MAIN DASHBOARD CONTENT
+========================================================= */
+
+.dashboard-content {
+  display: grid;
+
+  grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr);
+
+  gap: 16px;
+}
+
+
+/* =========================================================
+   PANELS
+========================================================= */
+
+.dashboard-panel {
+  background: #ffffff;
+
+  border: 1px solid #e1e6ec;
+
+  border-radius: 17px;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  min-width: 0;
+
+  box-shadow:
+    0 4px 15px rgba(25, 45, 70, 0.04);
+}
+
+
+/* =========================================================
+   PANEL HEADER
+========================================================= */
+
+.panel-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 18px;
+}
+
+.panel-header h3 {
+  margin: 0 0 5px;
+
+  font-size: 16px;
+
+  font-weight: 700;
+
+  color: #111827;
+}
+
+.panel-header p {
+  margin: 0;
+
+  font-size: 12px;
+
+  color: #7a8798;
+}
+
+
+/* =========================================================
+   VIEW ALL
+========================================================= */
+
+.view-all-btn {
+  border: none;
+
+  background: transparent;
+
+  color: #0878e8;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.view-all-btn:hover {
+  text-decoration: underline;
+}
+
+
+/* =========================================================
+   BOOKING TABLE
+========================================================= */
+
+.booking-table-wrapper {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+.booking-table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  min-width: 600px;
+}
+
+.booking-table th {
+  padding: 10px 12px;
+
+  text-align: left;
+
+  font-size: 12px;
+
+  font-weight: 500;
+
+  color: #637287;
+
+  border-bottom: 1px solid #e7ebf0;
+}
+
+.booking-table td {
+  padding: 12px;
+
+  font-size: 13px;
+
+  color: #172033;
+
+  border-bottom: 1px solid #edf0f4;
+}
+
+.booking-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.booking-table tbody tr:hover {
+  background: #fafcff;
+}
+
+
+/* =========================================================
+   STATUS BADGES
+========================================================= */
+
+.status-badge {
+  display: inline-flex;
+
+  align-items: center;
+
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+.status-badge.checked-in {
+  background: #d5f8e8;
+
+  color: #07824c;
+}
+
+.status-badge.reserved {
+  background: #dbeafe;
+
+  color: #1769c2;
+}
+
+.status-badge.pending {
+  background: #e0efff;
+
+  color: #0869d9;
+}
+
+
+/* =========================================================
+   OCCUPANCY PANEL
+========================================================= */
+
+.occupancy-panel {
+  min-height: 325px;
+}
+
+.occupancy-content {
+  margin-top: 5px;
+}
+
+
+/* =========================================================
+   OCCUPANCY CHART
+========================================================= */
+
+.occupancy-chart {
+  height: 205px;
+
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content: space-around;
+
+  gap: 13px;
+
+  padding: 10px 8px 0;
+
+  border-bottom: 1px solid #edf0f4;
+
+  box-sizing: border-box;
+}
+
+.occupancy-bar {
+  position: relative;
+
+  width: 38px;
+
+  max-height: 175px;
+
+  min-height: 30px;
+
+  border-radius: 10px 10px 0 0;
+
+  background: #0878e8;
+
+  transition:
+    height 0.3s ease,
+    transform 0.2s ease;
+}
+
+.occupancy-bar:hover {
+  transform: translateY(-3px);
+}
+
+.occupancy-bar span {
+  position: absolute;
+
+  top: -21px;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  font-size: 10px;
+
+  color: #64748b;
+
+  white-space: nowrap;
+
+  opacity: 0;
+}
+
+.occupancy-bar:hover span {
+  opacity: 1;
+}
+
+
+/* =========================================================
+   CHART LABELS
+========================================================= */
+
+.occupancy-labels {
+  display: flex;
+
+  justify-content: space-around;
+
+  gap: 13px;
+
+  padding: 8px 5px 0;
+}
+
+.occupancy-labels span {
+  width: 38px;
+
+  text-align: center;
+
+  font-size: 10px;
+
+  color: #8490a0;
+}
+
+
+/* =========================================================
+   OCCUPANCY SUMMARY
+========================================================= */
+
+.occupancy-summary {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 8px;
+
+  margin-top: 20px;
+}
+
+.occupancy-summary > div {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 4px;
+
+  padding: 9px 4px;
+
+  background: #f8fafc;
+
+  border-radius: 9px;
+}
+
+.occupancy-summary span:not(.summary-dot) {
+  font-size: 10px;
+
+  color: #738197;
+}
+
+.occupancy-summary strong {
+  font-size: 14px;
+
+  color: #172033;
+}
+
+
+/* =========================================================
+   SUMMARY DOTS
+========================================================= */
+
+.summary-dot {
+  width: 7px;
+  height: 7px;
+
+  display: block;
+
+  border-radius: 50%;
+}
+
+.summary-dot.occupied {
+  background: #0878e8;
+}
+
+.summary-dot.available {
+  background: #18b981;
+}
+
+.summary-dot.maintenance {
+  background: #f59e0b;
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .dashboard-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-content {
+    grid-template-columns: 1fr;
+  }
+
+  .occupancy-panel {
+    min-height: auto;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+  .dashboard-page {
+    padding: 12px;
+  }
+
+  .dashboard-banner {
+    min-height: auto;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 20px;
+
+    padding: 22px;
+
+    border-radius: 16px;
+  }
+
+  .dashboard-banner-content h1 {
+    font-size: 22px;
+  }
+
+  .dashboard-banner-content p {
+    font-size: 12px;
+  }
+
+  .new-booking-btn {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .dashboard-stats {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+  }
+
+  .stat-card {
+    min-height: 100px;
+  }
+
+  .dashboard-panel {
+    padding: 15px;
+
+    border-radius: 14px;
+  }
+
+  .panel-header h3 {
+    font-size: 15px;
+  }
+
+  .occupancy-bar {
+    width: 30px;
+  }
+
+  .occupancy-labels span {
+    width: 30px;
+  }
+
+  .occupancy-chart {
+    gap: 8px;
+  }
+
+  .occupancy-labels {
+    gap: 8px;
+  }
+
+}

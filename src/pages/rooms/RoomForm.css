@@ -1,0 +1,621 @@
+/* =========================================
+   ROOM FORM
+========================================= */
+
+.room-form {
+  width: 100%;
+  color: #111827;
+}
+
+
+/* =========================================
+   FORM SECTION
+========================================= */
+
+.room-form-section {
+  margin-bottom: 24px;
+}
+
+.room-form-section-title {
+  margin: 0 0 5px;
+  color: #111827;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.room-form-section-description {
+  margin: 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+
+/* =========================================
+   FORM GRID
+========================================= */
+
+.room-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+
+/* =========================================
+   FORM GROUP
+========================================= */
+
+.room-form-group {
+  width: 100%;
+}
+
+.room-form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+
+/* =========================================
+   LABEL
+========================================= */
+
+.room-form-label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #374151;
+
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.room-form-required {
+  color: #ef4444;
+  margin-left: 2px;
+}
+
+
+/* =========================================
+   INPUT / SELECT / TEXTAREA
+========================================= */
+
+.room-form-input,
+.room-form-select,
+.room-form-textarea {
+  width: 100%;
+  box-sizing: border-box;
+
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #111827;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  outline: none;
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+}
+
+
+/* Input */
+
+.room-form-input {
+  height: 42px;
+  padding: 0 13px;
+}
+
+
+/* Select */
+
+.room-form-select {
+  height: 42px;
+  padding: 0 36px 0 13px;
+
+  cursor: pointer;
+
+  appearance: auto;
+}
+
+
+/* Textarea */
+
+.room-form-textarea {
+  min-height: 100px;
+
+  padding: 11px 13px;
+
+  line-height: 1.5;
+
+  resize: vertical;
+}
+
+
+/* =========================================
+   PLACEHOLDER
+========================================= */
+
+.room-form-input::placeholder,
+.room-form-textarea::placeholder {
+  color: #9ca3af;
+}
+
+
+/* =========================================
+   FOCUS
+========================================= */
+
+.room-form-input:focus,
+.room-form-select:focus,
+.room-form-textarea:focus {
+  border-color: #3b82f6;
+
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+
+/* =========================================
+   HOVER
+========================================= */
+
+.room-form-input:hover,
+.room-form-select:hover,
+.room-form-textarea:hover {
+  border-color: #9ca3af;
+}
+
+
+/* =========================================
+   NUMBER INPUT
+========================================= */
+
+.room-form-input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.room-form-input[type="number"]::-webkit-inner-spin-button,
+.room-form-input[type="number"]::-webkit-outer-spin-button {
+  margin: 0;
+}
+
+
+/* =========================================
+   PRICE INPUT
+========================================= */
+
+.room-form-price-wrapper {
+  position: relative;
+}
+
+.room-form-currency {
+  position: absolute;
+
+  left: 13px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: #6b7280;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  pointer-events: none;
+}
+
+.room-form-price-input {
+  padding-left: 30px !important;
+}
+
+
+/* =========================================
+   CAPACITY
+========================================= */
+
+.room-form-capacity-wrapper {
+  position: relative;
+}
+
+.room-form-capacity-input {
+  padding-right: 70px !important;
+}
+
+.room-form-capacity-text {
+  position: absolute;
+
+  right: 13px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: #9ca3af;
+
+  font-size: 12px;
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   SECTION DIVIDER
+========================================= */
+
+.room-form-divider {
+  height: 1px;
+
+  margin: 25px 0;
+
+  background: #e5e7eb;
+}
+
+
+/* =========================================
+   AMENITIES
+========================================= */
+
+.room-form-amenities {
+  display: flex;
+  gap: 8px;
+}
+
+.room-form-amenity-input {
+  flex: 1;
+}
+
+.room-form-add-button {
+  flex-shrink: 0;
+
+  height: 42px;
+
+  padding: 0 17px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #111827;
+
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.room-form-add-button:hover {
+  background: #1f2937;
+}
+
+.room-form-add-button:active {
+  transform: scale(0.98);
+}
+
+
+/* =========================================
+   AMENITY TAGS
+========================================= */
+
+.room-form-amenity-list {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+  margin-top: 12px;
+}
+
+.room-form-amenity-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 6px 10px;
+
+  border-radius: 999px;
+
+  background: #eff6ff;
+
+  color: #1d4ed8;
+
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.room-form-amenity-remove {
+  width: 18px;
+  height: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  background: transparent;
+
+  color: #3b82f6;
+
+  font-size: 15px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.room-form-amenity-remove:hover {
+  background: #dbeafe;
+  color: #dc2626;
+}
+
+
+/* =========================================
+   ACTIVE ROOM
+========================================= */
+
+.room-form-active {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 64px;
+
+  margin-top: 20px;
+  padding: 12px 15px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+
+  background: #f9fafb;
+}
+
+.room-form-active-content {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.room-form-active-title {
+  color: #374151;
+
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.room-form-active-description {
+  color: #9ca3af;
+
+  font-size: 12px;
+}
+
+
+/* =========================================
+   TOGGLE SWITCH
+========================================= */
+
+.room-form-toggle {
+  position: relative;
+
+  width: 42px;
+  height: 23px;
+
+  flex-shrink: 0;
+
+  margin-left: 15px;
+}
+
+.room-form-toggle input {
+  position: absolute;
+
+  width: 0;
+  height: 0;
+
+  opacity: 0;
+}
+
+.room-form-toggle-slider {
+  position: absolute;
+
+  inset: 0;
+
+  border-radius: 999px;
+
+  background: #d1d5db;
+
+  cursor: pointer;
+
+  transition: background-color 0.2s ease;
+}
+
+.room-form-toggle-slider::before {
+  content: "";
+
+  position: absolute;
+
+  width: 17px;
+  height: 17px;
+
+  left: 3px;
+  top: 3px;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+
+  transition: transform 0.2s ease;
+}
+
+.room-form-toggle input:checked + .room-form-toggle-slider {
+  background: #2563eb;
+}
+
+.room-form-toggle
+  input:checked
+  + .room-form-toggle-slider::before {
+  transform: translateX(19px);
+}
+
+.room-form-toggle input:focus-visible + .room-form-toggle-slider {
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+
+/* =========================================
+   FORM ACTIONS
+========================================= */
+
+.room-form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  margin-top: 24px;
+  padding-top: 20px;
+
+  border-top: 1px solid #e5e7eb;
+}
+
+.room-form-cancel,
+.room-form-submit {
+  height: 40px;
+
+  padding: 0 18px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    opacity 0.15s ease;
+}
+
+
+/* Cancel */
+
+.room-form-cancel {
+  border: 1px solid #d1d5db;
+
+  background: #ffffff;
+
+  color: #374151;
+}
+
+.room-form-cancel:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+
+/* Submit */
+
+.room-form-submit {
+  border: 1px solid #2563eb;
+
+  background: #2563eb;
+
+  color: #ffffff;
+}
+
+.room-form-submit:hover {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+}
+
+.room-form-submit:focus-visible,
+.room-form-cancel:focus-visible,
+.room-form-add-button:focus-visible {
+  outline: none;
+
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+
+/* Disabled */
+
+.room-form-cancel:disabled,
+.room-form-submit:disabled,
+.room-form-add-button:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.5;
+}
+
+
+/* =========================================
+   DESCRIPTION HELP TEXT
+========================================= */
+
+.room-form-help-text {
+  display: block;
+
+  margin-top: 6px;
+
+  color: #9ca3af;
+
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 640px) {
+  .room-form-grid {
+    grid-template-columns: 1fr;
+
+    gap: 16px;
+  }
+
+  .room-form-group.full-width {
+    grid-column: auto;
+  }
+
+  .room-form-amenities {
+    flex-direction: column;
+  }
+
+  .room-form-add-button {
+    width: 100%;
+  }
+
+  .room-form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .room-form-cancel,
+  .room-form-submit {
+    width: 100%;
+  }
+}

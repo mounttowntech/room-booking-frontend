@@ -1,3 +1,4 @@
+import "./Login.css";
 import { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -85,74 +86,158 @@ const Login = () => {
   };
 
   return (
+    // <div className="login-page">
+    //   <div className="login-card">
+
+    //     <div className="login-header">
+    //       <h1>Hotel PMS</h1>
+
+    //       <p>
+    //         Admin Portal
+    //       </p>
+    //     </div>
+
+    //           {successMessage && (
+    //               <div className="success-message">
+    //                   {successMessage}
+    //               </div>
+    //           )}
+
+    //     <form onSubmit={handleSubmit}>
+
+    //       <Input
+    //         label="Email"
+    //         type="email"
+    //         name="email"
+    //         value={formData.email}
+    //         onChange={handleChange}
+    //         placeholder="Enter your email"
+    //         required
+    //       />
+
+    //       <Input
+    //         label="Password"
+    //         type="password"
+    //         name="password"
+    //         value={formData.password}
+    //         onChange={handleChange}
+    //         placeholder="Enter your password"
+    //         required
+    //       />
+
+    //       {error && (
+    //         <div className="error-message">
+    //           {error}
+    //         </div>
+    //       )}
+
+    //       <Button
+    //         type="submit"
+    //         loading={loading}
+    //       >
+    //         Login
+    //       </Button>
+
+    //     </form>
+
+    //           <div className="auth-footer">
+
+    //               <span>
+    //                   Don't have an account?
+    //               </span>
+
+    //               <Link to="/register">
+    //                   Create Account
+    //               </Link>
+
+    //           </div>
+
+    //   </div>
+    // </div>
     <div className="login-page">
-      <div className="login-card">
+  <div className="login-card">
 
-        <div className="login-header">
-          <h1>Hotel PMS</h1>
+    {/* Brand */}
+    <div className="login-brand">
+      <div className="brand-icon">
+        🏨
+      </div>
 
-          <p>
-            Admin Portal
-          </p>
-        </div>
-
-              {successMessage && (
-                  <div className="success-message">
-                      {successMessage}
-                  </div>
-              )}
-
-        <form onSubmit={handleSubmit}>
-
-          <Input
-            label="Email"
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Enter your email"
-            required
-          />
-
-          <Input
-            label="Password"
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="Enter your password"
-            required
-          />
-
-          {error && (
-            <div className="error-message">
-              {error}
-            </div>
-          )}
-
-          <Button
-            type="submit"
-            loading={loading}
-          >
-            Login
-          </Button>
-
-        </form>
-
-              <div className="auth-footer">
-
-                  <span>
-                      Don't have an account?
-                  </span>
-
-                  <Link to="/register">
-                      Create Account
-                  </Link>
-
-              </div>
-
+      <div>
+        <h1>Hotel PMS</h1>
+        <span>Property Management System</span>
       </div>
     </div>
+
+    {/* Header */}
+    <div className="login-header">
+      <h2>Welcome Back</h2>
+      <p>Sign in to access your admin dashboard</p>
+    </div>
+
+    {/* Success Message */}
+    {successMessage && (
+      <div className="success-message">
+        <span>✓</span>
+        {successMessage}
+      </div>
+    )}
+
+    {/* Form */}
+    <form onSubmit={handleSubmit}>
+
+      <Input
+        label="Email Address"
+        type="email"
+        name="email"
+        value={formData.email}
+        onChange={handleChange}
+        placeholder="Enter your email"
+        required
+      />
+
+      <Input
+        label="Password"
+        type="password"
+        name="password"
+        value={formData.password}
+        onChange={handleChange}
+        placeholder="Enter your password"
+        required
+      />
+
+      {error && (
+        <div className="error-message">
+          <span>!</span>
+          {error}
+        </div>
+      )}
+
+      <Button
+        type="submit"
+        loading={loading}
+      >
+        Sign In
+      </Button>
+
+    </form>
+
+    {/* Footer */}
+    <div className="auth-footer">
+      <span>Don't have an account?</span>
+
+      <Link to="/register">
+        Create Admin Account
+      </Link>
+    </div>
+
+    {/* Security Text */}
+    <div className="login-security">
+      🔒 Secure Admin Access
+    </div>
+
+  </div>
+</div>
   );
 };
 

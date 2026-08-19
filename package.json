@@ -5,14 +5,20 @@
         "preview": "vite preview --host 0.0.0.0"
     },
     "dependencies": {
+        "@hookform/resolvers": "^5.9.1",
         "@reduxjs/toolkit": "^2.12.0",
+        "@tailwindcss/vite": "^4.3.3",
         "@vitejs/plugin-react": "latest",
         "axios": "^1.19.0",
         "lucide-react": "latest",
         "react": "latest",
         "react-dom": "latest",
+        "react-hook-form": "^7.85.0",
+        "react-hot-toast": "^2.6.0",
         "react-redux": "^9.3.0",
         "react-router-dom": "^7.18.2",
-        "vite": "latest"
+        "tailwindcss": "^4.3.3",
+        "vite": "latest",
+        "yup": "^1.7.1"
     }
 }

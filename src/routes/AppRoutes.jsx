@@ -15,6 +15,8 @@ import ProtectedRoute from "../components/common/ProtectedRoute";
 
 import MainLayout from "../components/layout/MainLayout";
 
+import RoomList from "../pages/rooms/RoomList"
+
 const AppRoutes = () => {
   return (
     <BrowserRouter>
@@ -45,10 +47,8 @@ const AppRoutes = () => {
             element={<MainLayout />}
           >
 
-            <Route
-              path="/dashboard"
-              element={<Dashboard />}
-            />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/rooms" element={<RoomList />} />
 
           </Route>
 
