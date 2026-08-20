@@ -7,12 +7,20 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import toast from "react-hot-toast";
+
 import {
   registerUser,
   clearAuthError,
 } from "../../redux/slices/authSlice";
 
+import { registerSchema } from "../../validations/authValidation";
+
 import Input from "../../components/common/Input";
+
+import Select from "../../components/common/Select";
 
 import Button from "../../components/common/Button";
 
@@ -28,57 +36,128 @@ const Register = () => {
     (state) => state.auth
   );
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    mobileNumber: "",
-    password: "",
-    role: "admin",
+  // ==========================================================
+  // REACT HOOK FORM
+  // ==========================================================
+
+  const {
+    register,
+    handleSubmit,
+    formState: {
+      errors,
+    },
+  } = useForm({
+    resolver: yupResolver(
+      registerSchema
+    ),
+
+    defaultValues: {
+      name: "",
+      email: "",
+      mobileNumber: "",
+      password: "",
+      role: "admin",
+    },
   });
+
+
+  // const [formData, setFormData] = useState({
+  //   name: "",
+  //   email: "",
+  //   mobileNumber: "",
+  //   password: "",
+  //   role: "admin",
+  // });
 
   // ==========================================================
   // HANDLE INPUT
   // ==========================================================
 
-  const handleChange = (e) => {
-    const {
-      name,
-      value,
-    } = e.target;
+  // const handleChange = (e) => {
+  //   const {
+  //     name,
+  //     value,
+  //   } = e.target;
 
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     [name]: value,
+  //   }));
 
-    if (error) {
-      dispatch(clearAuthError());
-    }
-  };
+  //   if (error) {
+  //     dispatch(clearAuthError());
+  //   }
+  // };
 
   // ==========================================================
   // SUBMIT
   // ==========================================================
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // const onSubmit = async (e) => {
+  //   e.preventDefault();
 
-    const result = await dispatch(
-      registerUser(formData)
+  //   const result = await dispatch(
+  //     registerUser(formData)
+  //   );
+
+  //   if (
+  //     registerUser.fulfilled.match(result)
+  //   ) {
+  //     toast.success(
+  //       "Registration successful. Please login."
+  //     );
+  //     navigate("/login", {
+  //       replace: true,
+  //       state: {
+  //         message:
+  //           "Registration successful. Please login.",
+  //       },
+  //     });
+  //   }
+
+  //   if (
+  //     registerUser.rejected.match(result)
+  //   ) {
+  //     toast.error(
+  //       result.payload ||
+  //         "Registration failed. Please try again."
+  //     );
+  //   }
+  // };
+
+  const onSubmit = async (data) => {
+
+  console.log("Validated form data:", data);
+
+  const result = await dispatch(
+    registerUser(data)
+  );
+console.log("Dispatch result:", result);
+  if (
+    registerUser.fulfilled.match(result)
+  ) {
+    toast.success(
+      "Registration successful. Please login."
     );
 
-    if (
-      registerUser.fulfilled.match(result)
-    ) {
-      navigate("/login", {
-        replace: true,
-        state: {
-          message:
-            "Registration successful. Please login.",
-        },
-      });
-    }
-  };
+    navigate("/login", {
+      replace: true,
+      state: {
+        message:
+          "Registration successful. Please login.",
+      },
+    });
+  }
+
+  if (
+    registerUser.rejected.match(result)
+  ) {
+    toast.error(
+      result.payload ||
+        "Registration failed. Please try again."
+    );
+  }
+};
 
   return (
     // <div className="login-page">
@@ -250,16 +329,18 @@ const Register = () => {
     </div>
 
     {/* Form */}
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
 
       {/* Name */}
       <Input
         label="Full Name"
         type="text"
         name="name"
-        value={formData.name}
-        onChange={handleChange}
+        // value={formData.name}
+        // onChange={handleChange}
         placeholder="Enter your full name"
+        register={register}
+        errors={errors}
         required
       />
 
@@ -268,9 +349,11 @@ const Register = () => {
         label="Email Address"
         type="email"
         name="email"
-        value={formData.email}
-        onChange={handleChange}
+        // value={formData.email}
+        // onChange={handleChange}
         placeholder="Enter your email"
+        register={register}
+        errors={errors}
         required
       />
 
@@ -279,9 +362,11 @@ const Register = () => {
         label="Mobile Number"
         type="tel"
         name="mobileNumber"
-        value={formData.mobileNumber}
-        onChange={handleChange}
+        // value={formData.mobileNumber}
+        // onChange={handleChange}
         placeholder="Enter mobile number"
+        register={register}
+        errors={errors}
         required
       />
 
@@ -290,24 +375,28 @@ const Register = () => {
         label="Password"
         type="password"
         name="password"
-        value={formData.password}
-        onChange={handleChange}
+        // value={formData.password}
+        // onChange={handleChange}
         placeholder="Create a password"
+        register={register}
+        errors={errors}
         required
       />
 
       {/* Role */}
       <div className="input-group">
-        <label htmlFor="role">
+        {/* <label htmlFor="role">
           Account Role
-        </label>
+        </label> */}
 
-        <select
+        {/* <select
           id="role"
-          name="role"
-          value={formData.role}
-          onChange={handleChange}
-          required
+          {...register("role")}
+         className={
+        errors.role
+          ? "input-error"
+          : ""
+      }
         >
           <option value="admin">
             Admin
@@ -324,7 +413,28 @@ const Register = () => {
           <option value="housekeeping">
             Housekeeping
           </option>
-        </select>
+        </select> */}
+
+        <Select
+          label="Account Role"
+          name="role"
+          placeholder="Select role"
+          options={[
+            { value: "admin", label: "Admin" },
+            { value: "manager", label: "Manager" },
+            { value: "receptionist", label: "Receptionist" },
+            { value: "housekeeping", label: "Housekeeping" }
+          ]}
+          register={register}
+          errors={errors}
+          required
+        />
+
+        {/* {errors.role && (
+      <p className="field-error">
+        {errors.role.message}
+      </p>
+    )} */}
       </div>
 
       {/* Error */}

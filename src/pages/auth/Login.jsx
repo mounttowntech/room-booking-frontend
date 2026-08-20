@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
+import { yupResolver } from "@hookform/resolvers/yup";
+import toast from "react-hot-toast";
+
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import {
@@ -10,9 +13,12 @@ import {
   loginUser,
 } from "../../redux/slices/authSlice";
 
+import { useForm } from "react-hook-form";
+
 import Input from "../../components/common/Input";
 
 import Button from "../../components/common/Button";
+import { loginSchema } from "../../validations/authValidation";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -30,10 +36,31 @@ const Login = () => {
     user,
   } = useSelector((state) => state.auth);
 
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  // ==========================================================
+    // REACT HOOK FORM
+    // ==========================================================
+  
+    const {
+      register,
+      handleSubmit,
+      formState: {
+        errors,
+      },
+    } = useForm({
+      resolver: yupResolver(
+        loginSchema
+      ),
+  
+      defaultValues: {
+        email: "",
+        password: "",
+      },
+    });
+
+  // const [formData, setFormData] = useState({
+  //   email: "",
+  //   password: "",
+  // });
 
   // ==========================================================
   // REDIRECT AFTER LOGIN
@@ -71,14 +98,14 @@ const Login = () => {
   // SUBMIT
   // ==========================================================
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
 
     const result = await dispatch(
-      loginUser(formData)
+      loginUser(data)
     );
 
     if (loginUser.fulfilled.match(result)) {
+      toast.success("Login successful!");
       navigate("/dashboard", {
         replace: true,
       });
@@ -184,15 +211,17 @@ const Login = () => {
     )}
 
     {/* Form */}
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
 
       <Input
         label="Email Address"
         type="email"
         name="email"
-        value={formData.email}
-        onChange={handleChange}
+        // value={formData.email}
+        // onChange={handleChange}
         placeholder="Enter your email"
+        register={register}
+        errors={errors}
         required
       />
 
@@ -200,9 +229,11 @@ const Login = () => {
         label="Password"
         type="password"
         name="password"
-        value={formData.password}
-        onChange={handleChange}
+        // value={formData.password}
+        // onChange={handleChange}
         placeholder="Enter your password"
+        register={register}
+        errors={errors}
         required
       />
 

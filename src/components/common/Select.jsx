@@ -1,6 +1,5 @@
-const Input = ({
+const Select = ({
   label,
-  type = "text",
   name,
   // value,
   // onChange,
@@ -8,8 +7,8 @@ const Input = ({
   register,
   errors,
   required = false,
+  options
 }) => {
-  // console.log("register_yup", register);
   return (
     <div className="input-group">
       {label && (
@@ -19,15 +18,23 @@ const Input = ({
         </label>
       )}
 
-      <input
+      <select
         id={name}
         // name={name}
-        type={type}
         // value={value}
         // onChange={onChange}
         placeholder={placeholder}
         {...register(name)}
-      />
+      >
+        <option value="">
+          {placeholder}
+        </option>
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
 
       {errors && errors[name] && (
         <p className="error-message">
@@ -39,4 +46,4 @@ const Input = ({
   );
 };
 
-export default Input;
+export default Select;
