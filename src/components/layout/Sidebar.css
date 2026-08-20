@@ -1,0 +1,132 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
+
+:root {
+  --color-dark-blue: #0b1728;
+  --color-amber-gold: #c47d18;
+  --color-white: #ffffff;
+  --color-text-muted: #8292a6;
+  --font-family: "Nunito Sans", sans-serif;
+  --sidebar-width: 260px;
+}
+
+/* Fixed Sidebar Container */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  background-color: var(--color-dark-blue);
+  padding: 28px 16px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  font-family: var(--font-family);
+  color: var(--color-white);
+  z-index: 1000;
+}
+
+/* Header Section */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 32px;
+  padding-left: 4px;
+  flex-shrink: 0;
+}
+
+.logo-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  background-color: var(--color-amber-gold);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+  box-shadow: 0 4px 14px rgba(196, 125, 24, 0.35);
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  font-family: var(--font-family);
+  font-size: 1.45rem;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -0.2px;
+  color: var(--color-white);
+}
+
+.brand-subtitle {
+  font-family: var(--font-family);
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  margin-top: 1px;
+}
+
+/* Navigation List */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  flex-grow: 1;
+  padding-right: 4px;
+}
+
+.sidebar-nav::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sidebar-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-amber-gold);
+}
+
+/* Links */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  border-radius: 10px;
+  color: var(--color-white);
+  text-decoration: none;
+  font-family: var(--font-family);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.nav-icon {
+  color: var(--color-white);
+  flex-shrink: 0;
+}
+
+.nav-item.active {
+  background-color: var(--color-amber-gold);
+  color: var(--color-white);
+  box-shadow: 0 4px 14px rgba(196, 125, 24, 0.35);
+}
+
+.nav-item.active .nav-icon {
+  color: var(--color-white);
+}

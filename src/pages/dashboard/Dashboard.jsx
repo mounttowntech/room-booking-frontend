@@ -1,472 +1,202 @@
+import React from "react";
 import "./Dashboard.css";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { Bed, IndianRupee, Calendar, Clock, Plus } from "lucide-react";
 
 const Dashboard = () => {
-  const { user } = useSelector(
-    (state) => state.auth
-  );
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+
+  const statsData = {
+    totalRooms: 6,
+    availableRooms: 3,
+    todayRevenue: 5200,
+    activeBookings: 3,
+    pendingDue: 12680,
+  };
+
+  const recentBookings = [
+    {
+      id: "BK-0001",
+      guest: "Arun Kumar",
+      room: "102",
+      status: "Checked In",
+      statusClass: "checked-in",
+      amount: "₹5000",
+    },
+    {
+      id: "BK-0002",
+      guest: "Priya Sharma",
+      room: "201",
+      status: "Reserved",
+      statusClass: "reserved",
+      amount: "₹9000",
+    },
+    {
+      id: "BK-0003",
+      guest: "Nisha Rao",
+      room: "301",
+      status: "Pending",
+      statusClass: "pending",
+      amount: "₹1800",
+    },
+  ];
+
+  const chartData = [
+    { room: "101", height: "55%" },
+    { room: "102", height: "35%" },
+    { room: "201", height: "80%" },
+    { room: "202", height: "45%" },
+    { room: "301", height: "30%" },
+  ];
 
   return (
     <div className="dashboard-page">
-
-      {/* =====================================================
-      DASHBOARD HEADER
-  ===================================================== */}
-
       <div className="dashboard-banner">
-
         <div className="dashboard-banner-content">
-
-          <h1>
-            Room Booking & Billing Dashboard
-          </h1>
-
+          <h1>Room Booking & Billing Dashboard</h1>
           <p>
-            Welcome back, {user?.name || "Admin"}. Manage bookings,
-            check-ins, billing, payments and reports.
+            Static demo frontend connected to your backend workflow: booking,
+            check-in, invoices, payments and reports.
           </p>
-
         </div>
-
         <button
           className="new-booking-btn"
-          onClick={() => {
-            // navigate("/bookings/new");
-          }}
+          onClick={() => navigate("/bookings/new")}
         >
-          <span>+</span>
-          New Booking
+          <Plus size={18} />
+          <span>New Booking</span>
         </button>
-
       </div>
-
-
-      {/* =====================================================
-      SUMMARY CARDS
-  ===================================================== */}
 
       <div className="dashboard-stats">
-
-        {/* TOTAL ROOMS */}
-
         <div className="stat-card">
-
           <div className="stat-content">
-
-            <span className="stat-title">
-              Total Rooms
-            </span>
-
-            <h2>
-              0
-            </h2>
-
+            <span className="stat-title">Total Rooms</span>
+            <h2 className="stat-value">{statsData.totalRooms}</h2>
             <span className="stat-description">
-              All registered rooms
+              {statsData.availableRooms} available now
             </span>
-
           </div>
-
-          <div className="stat-icon">
-            🏨
+          <div className="stat-icon-wrapper">
+            <Bed size={20} />
           </div>
-
         </div>
 
-
-        {/* AVAILABLE ROOMS */}
-
         <div className="stat-card">
-
           <div className="stat-content">
-
-            <span className="stat-title">
-              Available Rooms
-            </span>
-
-            <h2>
-              0
+            <span className="stat-title">Today Revenue</span>
+            <h2 className="stat-value highlight">
+              ₹{statsData.todayRevenue.toLocaleString()}
             </h2>
-
-            <span className="stat-description">
-              Ready for booking
-            </span>
-
+            <span className="stat-description">Collected amount</span>
           </div>
-
-          <div className="stat-icon">
-            🛏️
+          <div className="stat-icon-wrapper">
+            <IndianRupee size={20} />
           </div>
-
         </div>
 
-
-        {/* TODAY'S BOOKINGS */}
-
         <div className="stat-card">
-
           <div className="stat-content">
-
-            <span className="stat-title">
-              Today's Bookings
-            </span>
-
-            <h2>
-              0
-            </h2>
-
-            <span className="stat-description">
-              Today's reservations
-            </span>
-
+            <span className="stat-title">Active Bookings</span>
+            <h2 className="stat-value highlight">{statsData.activeBookings}</h2>
+            <span className="stat-description">Reserved + checked-in</span>
           </div>
-
-          <div className="stat-icon">
-            📅
+          <div className="stat-icon-wrapper">
+            <Calendar size={20} />
           </div>
-
         </div>
 
-
-        {/* TODAY'S REVENUE */}
-
         <div className="stat-card">
-
           <div className="stat-content">
-
-            <span className="stat-title">
-              Today's Revenue
-            </span>
-
-            <h2>
-              ₹0
+            <span className="stat-title">Pending Due</span>
+            <h2 className="stat-value highlight">
+              ₹{statsData.pendingDue.toLocaleString()}
             </h2>
-
-            <span className="stat-description">
-              Collected amount
-            </span>
-
+            <span className="stat-description">Need collection</span>
           </div>
-
-          <div className="stat-icon">
-            ₹
+          <div className="stat-icon-wrapper">
+            <Clock size={20} />
           </div>
-
         </div>
-
       </div>
 
-
-      {/* =====================================================
-      DASHBOARD CONTENT
-  ===================================================== */}
-
-      <div className="dashboard-content">
-
-
-        {/* ===================================================
-        RECENT BOOKINGS
-    =================================================== */}
-
+      <div className="dashboard-content-grid">
         <div className="dashboard-panel bookings-panel">
-
           <div className="panel-header">
-
-            <div>
-              <h3>
-                Recent Bookings
-              </h3>
-
-              <p>
-                Latest room reservations
-              </p>
-            </div>
-
-            <button
-              className="view-all-btn"
-              onClick={() => {
-                // navigate("/bookings");
-              }}
-            >
-              View All
-            </button>
-
+            <h3>Recent Bookings</h3>
           </div>
-
 
           <div className="booking-table-wrapper">
-
             <table className="booking-table">
-
               <thead>
-
                 <tr>
-
-                  <th>
-                    Booking
-                  </th>
-
-                  <th>
-                    Guest
-                  </th>
-
-                  <th>
-                    Room
-                  </th>
-
-                  <th>
-                    Status
-                  </th>
-
-                  <th>
-                    Amount
-                  </th>
-
+                  <th>Booking ID</th>
+                  <th>Guest</th>
+                  <th>Room</th>
+                  <th>Status</th>
+                  <th>Amount</th>
                 </tr>
-
               </thead>
-
               <tbody>
-
-                <tr>
-
-                  <td>
-                    BK-0001
-                  </td>
-
-                  <td>
-                    Arun Kumar
-                  </td>
-
-                  <td>
-                    102
-                  </td>
-
-                  <td>
-                    <span className="status-badge checked-in">
-                      Checked In
-                    </span>
-                  </td>
-
-                  <td>
-                    ₹5,000
-                  </td>
-
-                </tr>
-
-
-                <tr>
-
-                  <td>
-                    BK-0002
-                  </td>
-
-                  <td>
-                    Priya Sharma
-                  </td>
-
-                  <td>
-                    201
-                  </td>
-
-                  <td>
-                    <span className="status-badge reserved">
-                      Reserved
-                    </span>
-                  </td>
-
-                  <td>
-                    ₹9,000
-                  </td>
-
-                </tr>
-
-
-                <tr>
-
-                  <td>
-                    BK-0003
-                  </td>
-
-                  <td>
-                    Nisha Rao
-                  </td>
-
-                  <td>
-                    301
-                  </td>
-
-                  <td>
-                    <span className="status-badge pending">
-                      Pending
-                    </span>
-                  </td>
-
-                  <td>
-                    ₹1,800
-                  </td>
-
-                </tr>
-
+                {recentBookings.map((item) => (
+                  <tr key={item.id}>
+                    <td className="booking-id">{item.id}</td>
+                    <td className="guest-name">{item.guest}</td>
+                    <td>{item.room}</td>
+                    <td>
+                      <span className={`status-badge ${item.statusClass}`}>
+                        {item.status}
+                      </span>
+                    </td>
+                    <td className="booking-amount">{item.amount}</td>
+                  </tr>
+                ))}
               </tbody>
-
             </table>
-
           </div>
-
         </div>
-
-
-        {/* ===================================================
-        ROOM OCCUPANCY
-    =================================================== */}
 
         <div className="dashboard-panel occupancy-panel">
-
           <div className="panel-header">
-
-            <div>
-
-              <h3>
-                Room Occupancy
-              </h3>
-
-              <p>
-                Current room status
-              </p>
-
-            </div>
-
+            <h3>Room Occupancy</h3>
+            <span className="panel-subtext">Today</span>
           </div>
 
-
-          <div className="occupancy-content">
-
-            <div className="occupancy-chart">
-
-              <div
-                className="occupancy-bar"
-                style={{ height: "65%" }}
-              >
-                <span>
-                  65%
-                </span>
-              </div>
-
-              <div
-                className="occupancy-bar"
-                style={{ height: "38%" }}
-              >
-                <span>
-                  38%
-                </span>
-              </div>
-
-              <div
-                className="occupancy-bar"
-                style={{ height: "80%" }}
-              >
-                <span>
-                  80%
-                </span>
-              </div>
-
-              <div
-                className="occupancy-bar"
-                style={{ height: "55%" }}
-              >
-                <span>
-                  55%
-                </span>
-              </div>
-
-              <div
-                className="occupancy-bar"
-                style={{ height: "30%" }}
-              >
-                <span>
-                  30%
-                </span>
-              </div>
-
+          <div className="occupancy-chart-container">
+            <div className="chart-y-axis">
+              <span>100%</span>
+              <span>75%</span>
+              <span>50%</span>
+              <span>25%</span>
+              <span>0%</span>
             </div>
 
-
-            <div className="occupancy-labels">
-
-              <span>
-                Mon
-              </span>
-
-              <span>
-                Tue
-              </span>
-
-              <span>
-                Wed
-              </span>
-
-              <span>
-                Thu
-              </span>
-
-              <span>
-                Fri
-              </span>
-
+            <div className="chart-grid-lines">
+              <div className="grid-line"></div>
+              <div className="grid-line"></div>
+              <div className="grid-line"></div>
+              <div className="grid-line"></div>
+              <div className="grid-line"></div>
             </div>
 
+            <div className="chart-bars-wrapper">
+              {chartData.map((item, index) => (
+                <div className="bar-column" key={index}>
+                  <div className="bar-track">
+                    <div
+                      className="bar-fill"
+                      style={{ height: item.height }}
+                    ></div>
+                  </div>
+                  <span className="bar-label">{item.room}</span>
+                </div>
+              ))}
+            </div>
           </div>
-
-
-          {/* OCCUPANCY SUMMARY */}
-
-          <div className="occupancy-summary">
-
-            <div>
-              <span className="summary-dot occupied"></span>
-
-              <span>
-                Occupied
-              </span>
-
-              <strong>
-                0
-              </strong>
-            </div>
-
-
-            <div>
-              <span className="summary-dot available"></span>
-
-              <span>
-                Available
-              </span>
-
-              <strong>
-                0
-              </strong>
-            </div>
-
-
-            <div>
-              <span className="summary-dot maintenance"></span>
-
-              <span>
-                Maintenance
-              </span>
-
-              <strong>
-                0
-              </strong>
-            </div>
-
-          </div>
-
         </div>
-
       </div>
-
     </div>
   );
 };

@@ -160,7 +160,7 @@ body {
   display: flex;
   min-height: 100vh;
 }
-
+/* 
 .sidebar {
   width: 230px;
   min-height: 100vh;
@@ -192,7 +192,7 @@ body {
 .sidebar nav a.active {
   background: #2563eb;
   color: white;
-}
+} */
 
 .menu-title {
   font-size: 11px;

@@ -5,10 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
-import {
-  clearAuthError,
-  loginUser,
-} from "../../redux/slices/authSlice";
+import { clearAuthError, loginUser } from "../../redux/slices/authSlice";
 
 import Input from "../../components/common/Input";
 
@@ -23,12 +20,9 @@ const Login = () => {
 
   const successMessage = location.state?.message || null;
 
-  const {
-    loading,
-    error,
-    isAuthenticated,
-    user,
-  } = useSelector((state) => state.auth);
+  const { loading, error, isAuthenticated, user } = useSelector(
+    (state) => state.auth,
+  );
 
   const [formData, setFormData] = useState({
     email: "",
@@ -45,10 +39,7 @@ const Login = () => {
         replace: true,
       });
     }
-  }, [
-    isAuthenticated,
-    navigate,
-  ]);
+  }, [isAuthenticated, navigate]);
 
   // ==========================================================
   // INPUT CHANGE
@@ -74,9 +65,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const result = await dispatch(
-      loginUser(formData)
-    );
+    const result = await dispatch(loginUser(formData));
 
     if (loginUser.fulfilled.match(result)) {
       navigate("/dashboard", {
@@ -155,89 +144,70 @@ const Login = () => {
     //   </div>
     // </div>
     <div className="login-page">
-  <div className="login-card">
+      <div className="login-card">
+        <div className="login-brand">
+          <div className="brand-icon">🏨</div>
 
-    {/* Brand */}
-    <div className="login-brand">
-      <div className="brand-icon">
-        🏨
-      </div>
-
-      <div>
-        <h1>Hotel PMS</h1>
-        <span>Property Management System</span>
-      </div>
-    </div>
-
-    {/* Header */}
-    <div className="login-header">
-      <h2>Welcome Back</h2>
-      <p>Sign in to access your admin dashboard</p>
-    </div>
-
-    {/* Success Message */}
-    {successMessage && (
-      <div className="success-message">
-        <span>✓</span>
-        {successMessage}
-      </div>
-    )}
-
-    {/* Form */}
-    <form onSubmit={handleSubmit}>
-
-      <Input
-        label="Email Address"
-        type="email"
-        name="email"
-        value={formData.email}
-        onChange={handleChange}
-        placeholder="Enter your email"
-        required
-      />
-
-      <Input
-        label="Password"
-        type="password"
-        name="password"
-        value={formData.password}
-        onChange={handleChange}
-        placeholder="Enter your password"
-        required
-      />
-
-      {error && (
-        <div className="error-message">
-          <span>!</span>
-          {error}
+          <div>
+            <h1>Hotel PMS</h1>
+            <span>Property Management System</span>
+          </div>
         </div>
-      )}
 
-      <Button
-        type="submit"
-        loading={loading}
-      >
-        Sign In
-      </Button>
+        <div className="login-header">
+          <h2>Welcome Back</h2>
+          <p>Sign in to access your admin dashboard</p>
+        </div>
 
-    </form>
+        {successMessage && (
+          <div className="success-message">
+            <span>✓</span>
+            {successMessage}
+          </div>
+        )}
 
-    {/* Footer */}
-    <div className="auth-footer">
-      <span>Don't have an account?</span>
+        <form onSubmit={handleSubmit}>
+          <Input
+            label="Email Address"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Enter your email"
+            required
+          />
 
-      <Link to="/register">
-        Create Admin Account
-      </Link>
+          <Input
+            label="Password"
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="Enter your password"
+            required
+          />
+
+          {error && (
+            <div className="error-message">
+              <span>!</span>
+              {error}
+            </div>
+          )}
+
+          <Button type="submit" loading={loading}>
+            Sign In
+          </Button>
+        </form>
+
+        <div className="auth-footer">
+          <span>Don't have an account?</span>
+
+          <Link to="/register">Create Admin Account</Link>
+        </div>
+
+        <div className="login-security">🔒 Secure Admin Access</div>
+      </div>
     </div>
-
-    {/* Security Text */}
-    <div className="login-security">
-      🔒 Secure Admin Access
-    </div>
-
-  </div>
-</div>
   );
 };
 

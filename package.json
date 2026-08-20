@@ -10,7 +10,7 @@
         "@tailwindcss/vite": "^4.3.3",
         "@vitejs/plugin-react": "latest",
         "axios": "^1.19.0",
-        "lucide-react": "latest",
+        "lucide-react": "^1.33.0",
         "react": "latest",
         "react-dom": "latest",
         "react-hook-form": "^7.85.0",
