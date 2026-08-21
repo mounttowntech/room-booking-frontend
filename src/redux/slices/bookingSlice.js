@@ -1,87 +1,87 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import guestService from "../../services/guestService";
+import bookingService from "../../services/bookingService";
 
 // ============================================================
-// GET GUESTS
+// GET BOOKINGS
 // ============================================================
 
-export const getGuests = createAsyncThunk(
-  "guests/getGuests",
+export const getBookings = createAsyncThunk(
+  "bookings/getBookings",
   async (_, { rejectWithValue }) => {
     try {
-        console.log("Fetching guests...");
-      const response = await guestService.getGuests();
+        console.log("Fetching getbookings...");
+      const response = await bookingService.getBookings();
 
       return response;
     } catch (error) {
-        console.log("Error fetching guests:", error);
+        console.log("Error fetching bookings:", error);
       return rejectWithValue(
         error.response?.data?.message ||
-          "Failed to fetch guests."
+          "Failed to fetch bookings."
       );
     }
   }
 );
 
 // ============================================================
-// CREATE GUEST
+// CREATE BOOKING
 // ============================================================
 
-export const createGuest = createAsyncThunk(
-  "guests/createGuest",
+export const createBooking = createAsyncThunk(
+  "bookings/createBooking",
 
-  async (guestData, { rejectWithValue }) => {
+  async (bookingData, { rejectWithValue }) => {
     try {
       const response =
-        await guestService.createGuest(guestData);
+        await bookingService.createBooking(bookingData);
 
       return response;
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message ||
-          "Failed to create guest."
+          "Failed to create booking."
       );
     }
   }
 );
 
 // ============================================================
-// UPDATE GUEST
+// UPDATE BOOKING
 // ============================================================
 
-export const updateGuest = createAsyncThunk(
-  "guests/updateGuest",
+export const updateBooking = createAsyncThunk(
+  "bookings/updateBooking",
 
-  async ({ id, guestData }, { rejectWithValue }) => {
+  async ({ id, bookingData }, { rejectWithValue }) => {
     try {
-      const response = await guestService.updateGuest(id, guestData);
+      const response = await bookingService.updateBooking(id, bookingData);
 
       return response;
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message ||
-          "Failed to update guest."
+          "Failed to update booking."
       );
     }
   }
 );
 
 // ============================================================
-// DELETE GUEST
+// DELETE BOOKING
 // ============================================================
 
-export const deleteGuest = createAsyncThunk(
-  "guests/deleteGuest",
+export const deleteBooking = createAsyncThunk(
+  "bookings/deleteBooking",
 
   async (id, { rejectWithValue }) => {
     try {
-      const response = await guestService.deleteGuest(id);
+      const response = await bookingService.deleteBooking(id);
 
       return response;
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message ||
-          "Failed to delete guest."
+          "Failed to delete booking."
       );
     }
   }
@@ -94,7 +94,6 @@ export const deleteGuest = createAsyncThunk(
 const storedUser = localStorage.getItem("hotel_user");
 
 const initialState = {
-  guests: [],
   user: storedUser ? JSON.parse(storedUser) : null,
 
   token: localStorage.getItem("hotel_token") || null,
@@ -112,14 +111,14 @@ const initialState = {
 // SLICE
 // ============================================================
 
-const guestSlice = createSlice({
-  name: "guests",
+const bookingSlice = createSlice({
+  name: "bookings",
 
   initialState,
 
   reducers: {
     logout: (state) => {
-      state.guests = null;
+      state.bookings = null;
       state.token = null;
       state.isAuthenticated = false;
       state.error = null;
@@ -136,75 +135,76 @@ const guestSlice = createSlice({
     // --------------------------------------------------------
 
     builder
-      .addCase(getGuests.pending, (state) => {
+      .addCase(getBookings.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
 
-      .addCase(getGuests.fulfilled, (state, action) => {
+      .addCase(getBookings.fulfilled, (state, action) => {
+        console.log("getBookings fulfilled:", action.payload);
         state.loading = false;
-        state.guests = action.payload;
+        state.bookings = action.payload;
       })
 
-      .addCase(getGuests.rejected, (state, action) => {
+      .addCase(getBookings.rejected, (state, action) => {
         state.loading = false;
         state.error =
           action.payload ||
-          "Failed to fetch guests.";
+          "Failed to fetch bookings.";
       });
 
       // ============================================================
-// createGuest
+// createBooking
 // ============================================================
 
 builder
-  .addCase(createGuest.pending, (state) => {
+  .addCase(createBooking.pending, (state) => {
     state.loading = true;
     state.error = null;
   })
 
-  .addCase(createGuest.fulfilled, (state, action) => {
+  .addCase(createBooking.fulfilled, (state, action) => {
     state.loading = false;
     state.error = null;
-    state.guests = action.payload;
+    state.bookings = action.payload;
   })
 
-  .addCase(createGuest.rejected, (state, action) => {
+  .addCase(createBooking.rejected, (state, action) => {
     state.loading = false;
 
     state.error =
       action.payload ||
-      "Failed to create guest";
+      "Failed to create booking";
   });
 
     // --------------------------------------------------------
-    // updateGuest
+    // updateBooking
     // --------------------------------------------------------
 
     builder
-      .addCase(updateGuest.pending, (state) => {
+      .addCase(updateBooking.pending, (state) => {
         state.loading = true;
       })
 
-      .addCase(updateGuest.fulfilled, (state, action) => {
+      .addCase(updateBooking.fulfilled, (state, action) => {
         state.loading = false;
-        state.guests = action.payload;
+        state.bookings = action.payload;
       })
 
-      .addCase(updateGuest.rejected, (state) => {
+      .addCase(updateBooking.rejected, (state) => {
         state.loading = false;
       });
 
     // --------------------------------------------------------
-    // deleteGuest
+    // deleteBooking
     // -------------------------------------------------------- 
-    builder.addCase(deleteGuest.pending, (state) => {
+    builder.addCase(deleteBooking.pending, (state) => {
       state.loading = true;
     })
 
-    .addCase(deleteGuest.fulfilled, (state, action) => {
+    .addCase(deleteBooking.fulfilled, (state, action) => {
       state.loading = false;
-      state.guests = action.payload;
+      state.bookings = action.payload;
     });
   },
 });
@@ -212,6 +212,6 @@ builder
 export const {
   logout,
   clearAuthError,
-} = guestSlice.actions;
+} = bookingSlice.actions;
 
-export default guestSlice.reducer;
+export default bookingSlice.reducer;
