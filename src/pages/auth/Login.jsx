@@ -1,26 +1,33 @@
-import "./Login.css";
 import { useEffect, useState } from "react";
-
-import { useDispatch, useSelector } from "react-redux";
-
 import { Link, useNavigate, useLocation } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
 import { clearAuthError, loginUser } from "../../redux/slices/authSlice";
+import {
+  Mail,
+  Lock,
+  Eye,
+  EyeOff,
+  LogIn as LogInIcon,
+  ShieldCheck,
+  Check,
+} from "lucide-react";
+import "./Login.css";
 
-import Input from "../../components/common/Input";
-
-import Button from "../../components/common/Button";
+// ------------------------------------------------------------
+// BACKGROUND IMAGE
+// Same photo used on the Register page — keep this import path
+// pointing at the same file so both screens match.
+// ------------------------------------------------------------
+import bgImage from "../../assets/regbg.png";
 
 const Login = () => {
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
-
   const location = useLocation();
 
   const successMessage = location.state?.message || null;
 
-  const { loading, error, isAuthenticated, user } = useSelector(
+  const { loading, error, isAuthenticated } = useSelector(
     (state) => state.auth,
   );
 
@@ -28,6 +35,8 @@ const Login = () => {
     email: "",
     password: "",
   });
+
+  const [showPassword, setShowPassword] = useState(false);
 
   // ==========================================================
   // REDIRECT AFTER LOGIN
@@ -75,137 +84,159 @@ const Login = () => {
   };
 
   return (
-    // <div className="login-page">
-    //   <div className="login-card">
+    <div className="login-page" style={{ backgroundImage: `url(${bgImage})` }}>
+      {/* Dark navy shape + overlay sit on top of the background photo */}
+      <div className="login-overlay" />
+      <div className="login-shape" />
 
-    //     <div className="login-header">
-    //       <h1>Hotel PMS</h1>
+      <div className="login-wrapper">
+        {/* ====================================================
+            LEFT SIDE — HERO TEXT
+        ==================================================== */}
+        <div className="login-hero">
+          <h2>
+            Everything your property
+            <br />
+            needs, <span className="login-brand-highlight">in one place</span>
+          </h2>
 
-    //       <p>
-    //         Admin Portal
-    //       </p>
-    //     </div>
+          <p>
+            RoomBook Suite brings bookings, staff, and guest experience together
+            in one simple dashboard.
+          </p>
 
-    //           {successMessage && (
-    //               <div className="success-message">
-    //                   {successMessage}
-    //               </div>
-    //           )}
-
-    //     <form onSubmit={handleSubmit}>
-
-    //       <Input
-    //         label="Email"
-    //         type="email"
-    //         name="email"
-    //         value={formData.email}
-    //         onChange={handleChange}
-    //         placeholder="Enter your email"
-    //         required
-    //       />
-
-    //       <Input
-    //         label="Password"
-    //         type="password"
-    //         name="password"
-    //         value={formData.password}
-    //         onChange={handleChange}
-    //         placeholder="Enter your password"
-    //         required
-    //       />
-
-    //       {error && (
-    //         <div className="error-message">
-    //           {error}
-    //         </div>
-    //       )}
-
-    //       <Button
-    //         type="submit"
-    //         loading={loading}
-    //       >
-    //         Login
-    //       </Button>
-
-    //     </form>
-
-    //           <div className="auth-footer">
-
-    //               <span>
-    //                   Don't have an account?
-    //               </span>
-
-    //               <Link to="/register">
-    //                   Create Account
-    //               </Link>
-
-    //           </div>
-
-    //   </div>
-    // </div>
-    <div className="login-page">
-      <div className="login-card">
-        <div className="login-brand">
-          <div className="brand-icon">🏨</div>
-
-          <div>
-            <h1>Hotel PMS</h1>
-            <span>Property Management System</span>
-          </div>
+          <ul className="login-hero-list">
+            <li>
+              <Check size={16} />
+              Real-time booking management
+            </li>
+            <li>
+              <Check size={16} />
+              Role-based team access
+            </li>
+            <li>
+              <Check size={16} />
+              Secure and always available
+            </li>
+          </ul>
         </div>
 
-        <div className="login-header">
-          <h2>Welcome Back</h2>
-          <p>Sign in to access your admin dashboard</p>
-        </div>
-
-        {successMessage && (
-          <div className="success-message">
-            <span>✓</span>
-            {successMessage}
+        {/* ====================================================
+            RIGHT SIDE — LOGIN CARD
+        ==================================================== */}
+        <div className="login-card">
+          {/* ====================================================
+              ICON
+          ==================================================== */}
+          <div className="login-icon">
+            <LogInIcon size={22} strokeWidth={2.2} />
           </div>
-        )}
 
-        <form onSubmit={handleSubmit}>
-          <Input
-            label="Email Address"
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Enter your email"
-            required
-          />
+          {/* ====================================================
+              HEADER
+          ==================================================== */}
+          <div className="login-header">
+            <h1>Welcome Back</h1>
+            <p>
+              Sign in to{" "}
+              <span className="login-brand-highlight">RoomBook Suite</span> to
+              access your admin dashboard.
+            </p>
+          </div>
 
-          <Input
-            label="Password"
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="Enter your password"
-            required
-          />
-
-          {error && (
-            <div className="error-message">
-              <span>!</span>
-              {error}
+          {/* ====================================================
+              SUCCESS MESSAGE
+          ==================================================== */}
+          {successMessage && (
+            <div className="login-success-message">
+              <span className="login-success-icon">✓</span>
+              {successMessage}
             </div>
           )}
 
-          <Button type="submit" loading={loading}>
-            Sign In
-          </Button>
-        </form>
+          {/* ====================================================
+              FORM
+          ==================================================== */}
+          <form onSubmit={handleSubmit} className="login-form">
+            {/* EMAIL */}
+            <div className="login-form-group full-width">
+              <label htmlFor="email">Email Address</label>
+              <div className="login-input-wrapper">
+                <Mail size={17} className="login-input-icon" />
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Enter your email"
+                  required
+                />
+              </div>
+            </div>
 
-        <div className="auth-footer">
-          <span>Don't have an account?</span>
+            {/* PASSWORD */}
+            <div className="login-form-group full-width">
+              <label htmlFor="password">Password</label>
+              <div className="login-input-wrapper">
+                <Lock size={17} className="login-input-icon" />
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="Enter your password"
+                  required
+                />
+                <button
+                  type="button"
+                  className="login-password-toggle"
+                  onClick={() => setShowPassword((v) => !v)}
+                  tabIndex="-1"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
+                </button>
+              </div>
+            </div>
 
-          <Link to="/register">Create Admin Account</Link>
+            {/* ERROR MESSAGE */}
+            {error && <div className="login-error-message">{error}</div>}
+
+            {/* SUBMIT BUTTON */}
+            <button
+              type="submit"
+              className="login-submit-btn"
+              disabled={loading}
+            >
+              {loading ? (
+                <span className="login-loading-spinner" />
+              ) : (
+                <LogInIcon size={18} />
+              )}
+              {loading ? "Signing In..." : "Sign In"}
+            </button>
+          </form>
+
+          {/* ====================================================
+              FOOTER
+          ==================================================== */}
+          <div className="login-footer">
+            <span>Don&apos;t have an account?</span>{" "}
+            <Link to="/register" className="register-link">
+              Create Admin Account
+            </Link>
+          </div>
+
+          {/* ====================================================
+              SECURITY NOTE
+          ==================================================== */}
+          <div className="login-security">
+            <ShieldCheck size={14} />
+            Secure Admin Access
+          </div>
         </div>
-
-        <div className="login-security">🔒 Secure Admin Access</div>
       </div>
     </div>
   );

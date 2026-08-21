@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import * as LucideIcons from "lucide-react";
 import "./Sidebar.css";
 
+import logo from "../../assets/roomlogo.png";
 const SafeIcon = ({ name, size = 20, className = "" }) => {
   const IconComponent = LucideIcons[name] || LucideIcons.HelpCircle;
   return <IconComponent size={size} className={className} />;
@@ -24,12 +25,9 @@ const Sidebar = () => {
       {/* Header / Logo Section */}
       <div className="sidebar-header">
         <div className="logo-icon-wrapper">
-          <SafeIcon name="ShoppingBag" size={24} className="logo-icon" />
+          <img src={logo} alt="WonderBill Logo" className="sidebar-logo" />
         </div>
-        <div className="logo-text">
-          <h1 className="brand-name">BillingPro</h1>
-          <span className="brand-subtitle">Enterprise Edition</span>
-        </div>
+       
       </div>
 
       {/* Navigation Links */}
