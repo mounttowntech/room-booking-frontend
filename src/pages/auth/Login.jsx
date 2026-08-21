@@ -21,6 +21,7 @@ import "./Login.css";
 // pointing at the same file so both screens match.
 // ------------------------------------------------------------
 import bgImage from "../../assets/regbg.png";
+import { useForm } from "react-hook-form";
 
 import Input from "../../components/common/Input";
 
@@ -42,6 +43,27 @@ const Login = () => {
     email: "",
     password: "",
   });
+
+  // ==========================================================
+    // REACT HOOK FORM
+    // ==========================================================
+  
+    // const {
+    //   register,
+    //   handleSubmit,
+    //   formState: {
+    //     errors,
+    //   },
+    // } = useForm({
+    //   resolver: yupResolver(
+    //     loginSchema
+    //   ),
+  
+    //   defaultValues: {
+    //     email: "",
+    //     password: "",
+    //   },
+    // });
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -77,6 +99,20 @@ const Login = () => {
   // ==========================================================
   // SUBMIT
   // ==========================================================
+
+  const onSubmit = async (data) => {
+console.log("Login form submitted:", data);
+    const result = await dispatch(
+      loginUser(data)
+    );
+
+    if (loginUser.fulfilled.match(result)) {
+      toast.success("Login successful!");
+      navigate("/dashboard", {
+        replace: true,
+      });
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -170,7 +206,7 @@ const Login = () => {
               <label htmlFor="email">Email Address</label>
               <div className="login-input-wrapper">
                 <Mail size={17} className="login-input-icon" />
-                {/* <input
+                <input
                   id="email"
                   type="email"
                   name="email"
@@ -178,8 +214,8 @@ const Login = () => {
                   onChange={handleChange}
                   placeholder="Enter your email"
                   required
-                /> */}
-                <Input
+                />
+                {/* <Input
         label="Email Address"
         type="email"
         name="email"
@@ -189,7 +225,7 @@ const Login = () => {
         register={register}
         errors={errors}
         required
-      />
+      /> */}
               </div>
             </div>
 
@@ -198,7 +234,7 @@ const Login = () => {
               <label htmlFor="password">Password</label>
               <div className="login-input-wrapper">
                 <Lock size={17} className="login-input-icon" />
-                {/* <input
+                <input
                   id="password"
                   type={showPassword ? "text" : "password"}
                   name="password"
@@ -206,8 +242,8 @@ const Login = () => {
                   onChange={handleChange}
                   placeholder="Enter your password"
                   required
-                /> */}
-                <Input
+                />
+                {/* <Input
         label="Password"
         type="password"
         name="password"
@@ -217,7 +253,7 @@ const Login = () => {
         register={register}
         errors={errors}
         required
-      />
+      /> */}
                 <button
                   type="button"
                   className="login-password-toggle"
@@ -246,6 +282,18 @@ const Login = () => {
               )}
               {loading ? "Signing In..." : "Sign In"}
             </button>
+
+            {/* <Button
+        type="submit"
+        loading={loading}
+      >
+        {loading ? (
+                <span className="login-loading-spinner" />
+              ) : (
+                <LogInIcon size={18} />
+              )}
+              {loading ? "Signing In..." : "Sign In"}
+      </Button> */}
           </form>
 
           {/* ====================================================
