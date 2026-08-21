@@ -13,6 +13,7 @@ import {
   UserPlus,
   Smartphone,
   Briefcase,
+  Check,
 } from "lucide-react";
 import "./Register.css";
 
@@ -105,6 +106,40 @@ const Register = () => {
       <div className="register-shape" />
 
       <div className="register-wrapper">
+        {/* ====================================================
+            LEFT SIDE — HERO TEXT
+        ==================================================== */}
+        <div className="register-hero">
+          <h2>
+            Set up your property
+            <br />
+            on <span className="brand-highlight">RoomBook Suite</span>
+          </h2>
+
+          <p>
+            Create your admin account and start managing rooms, staff, and
+            bookings in minutes.
+          </p>
+
+          <ul className="register-hero-list">
+            <li>
+              <Check size={16} />
+              Centralized hotel management
+            </li>
+            <li>
+              <Check size={16} />
+              Add staff with role-based access
+            </li>
+            <li>
+              <Check size={16} />
+              Set up in just a few minutes
+            </li>
+          </ul>
+        </div>
+
+        {/* ====================================================
+            RIGHT SIDE — REGISTER CARD
+        ==================================================== */}
         <div className="register-card">
           {/* ====================================================
               ICON
@@ -119,8 +154,8 @@ const Register = () => {
           <div className="register-header">
             <h1>Create Your Account</h1>
             <p>
-              Join <span className="brand-highlight">RoomBook Suite</span> and
-              simplify your operations.
+              Join <span className="brand-highlight">RoomBook Suite</span>{" "}
+              and simplify your operations.
             </p>
           </div>
 
@@ -238,9 +273,7 @@ const Register = () => {
                     className="password-toggle"
                     onClick={() => setShowPassword((v) => !v)}
                     tabIndex="-1"
-                    aria-label={
-                      showPassword ? "Hide password" : "Show password"
-                    }
+                    aria-label={showPassword ? "Hide password" : "Show password"}
                   >
                     {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
                   </button>

@@ -1,7 +1,28 @@
+/* ========================================================
+   REGISTER PAGE — exact match to design mockup
+======================================================== */
+
+/* ========================================================
+   GLOBAL RESET — prevents the whole page/body from scrolling
+   (only the .register-card itself scrolls if content overflows)
+======================================================== */
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
 
 * {
   box-sizing: border-box;
 }
+
+/* ========================================================
+   PAGE / BACKGROUND
+======================================================== */
 
 .register-page {
   position: relative;
@@ -12,20 +33,25 @@
     -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue",
     Arial, sans-serif;
 
-
+  /* Background image is set inline via JSX (see bgImage import).
+     This background-color is just a fallback while the image loads. */
   background-color: #16233c;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
+/* Semi-transparent navy tint over the photo — NOT solid, or the
+   background image would be completely hidden behind it. */
 .register-overlay {
   position: absolute;
   inset: 0;
- 
+  background: rgba(14, 26, 48, 0.35);
   z-index: 0;
 }
 
+/* The big soft "bite" shape bulging in from the right, behind the card.
+   Built from an oversized circle so the left edge reads as a curve. */
 .register-shape {
   position: absolute;
   top: 50%;
@@ -36,10 +62,13 @@
   max-height: 130vw;
   transform: translateY(-50%);
   border-radius: 50%;
-  background: rgba(13, 23, 43, 0.86);
+  background: rgba(13, 23, 43, 0.82);
   z-index: 1;
 }
 
+/* ========================================================
+   WRAPPER / CARD POSITIONING
+======================================================== */
 
 .register-wrapper {
   position: relative;
@@ -47,21 +76,75 @@
   height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  padding: 16px 5% 16px 0;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 16px 6% 16px 28px;
   overflow: hidden;
+}
+
+/* ========================================================
+   LEFT SIDE — SIMPLE HERO TEXT
+======================================================== */
+
+.register-hero {
+  flex: 1;
+  max-width: 440px;
+  color: #ffffff;
+  margin-left: 100px;
+}
+
+.register-hero h2 {
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.25;
+  margin: 0 0 14px 0;
+  letter-spacing: -0.5px;
+}
+
+.register-hero p {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 24px 0;
+}
+
+.register-hero-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.register-hero-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.register-hero-list li svg {
+  flex-shrink: 0;
+  color: #dd8a2e;
 }
 
 .register-card {
   background: #ffffff;
   border-radius: 24px;
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
-  padding: 18px 32px 16px;
+  padding: 14px 32px 12px;
   width: 100%;
   max-width: 560px;
   max-height: calc(100vh - 24px);
   overflow-y: auto;
+  flex-shrink: 0;
 }
+
+/* ========================================================
+   ICON
+======================================================== */
 
 .register-icon {
   width: 42px;
@@ -75,9 +158,13 @@
   color: #dd8a2e;
 }
 
+/* ========================================================
+   HEADER
+======================================================== */
+
 .register-header {
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .register-header h1 {
@@ -99,10 +186,14 @@
   font-weight: 700;
 }
 
+/* ========================================================
+   FORM LAYOUT
+======================================================== */
+
 .register-form {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 7px;
 }
 
 .form-row {
@@ -127,6 +218,10 @@
   color: #16264a;
 }
 
+/* ========================================================
+   INPUTS
+======================================================== */
+
 .input-wrapper {
   position: relative;
   display: flex;
@@ -136,6 +231,11 @@
 .input-icon {
   position: absolute;
   left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px;
   color: #9aa3b2;
   pointer-events: none;
   flex-shrink: 0;
@@ -144,7 +244,7 @@
 .form-group input,
 .form-group select {
   width: 100%;
-  padding: 8px 12px 8px 38px;
+  padding: 8px 12px 8px 38px !important;
   border: 1.5px solid #e3e6eb;
   border-radius: 8px;
   font-size: 13px;
@@ -154,11 +254,12 @@
     border-color 0.2s ease,
     box-shadow 0.2s ease;
   font-family: inherit;
+  box-sizing: border-box;
 }
 
 .form-group select {
   appearance: none;
-  padding-right: 30px;
+  padding-right: 30px !important;
   cursor: pointer;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none'><path d='M1 1L5 5L9 1' stroke='%239aa3b2' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>");
   background-repeat: no-repeat;
@@ -181,11 +282,15 @@
   border-color: #cfd4dc;
 }
 
+/* Password fields need extra right padding for the eye toggle */
 .form-group input[name="password"],
 .form-group input[name="confirmPassword"] {
-  padding-right: 36px;
+  padding-right: 36px !important;
 }
 
+/* ========================================================
+   PASSWORD TOGGLE
+======================================================== */
 
 .password-toggle {
   position: absolute;
@@ -205,6 +310,9 @@
   color: #dd8a2e;
 }
 
+/* ========================================================
+   SECURITY INFO BOX
+======================================================== */
 
 .security-info {
   display: flex;
@@ -212,9 +320,9 @@
   gap: 8px;
   background-color: #fdf1e2;
   border-radius: 8px;
-  padding: 8px 10px;
+  padding: 6px 10px;
   font-size: 11px;
-  line-height: 1.35;
+  line-height: 1.3;
   color: #7a5a2e;
 }
 
@@ -225,6 +333,10 @@
   width: 16px;
   height: 16px;
 }
+
+/* ========================================================
+   TERMS CHECKBOX
+======================================================== */
 
 .terms-group {
   display: flex;
@@ -258,6 +370,10 @@
   text-decoration: underline;
 }
 
+/* ========================================================
+   ERROR MESSAGE
+======================================================== */
+
 .error-message {
   background-color: #fdecec;
   border: 1px solid #f6c6c6;
@@ -267,9 +383,13 @@
   color: #c0392b;
 }
 
+/* ========================================================
+   SUBMIT BUTTON
+======================================================== */
+
 .submit-btn {
   width: 100%;
-  padding: 10px 16px;
+  padding: 9px 16px;
   background: #16264a;
   color: #ffffff;
   border: none;
@@ -315,6 +435,9 @@
   }
 }
 
+/* ========================================================
+   DIVIDER
+======================================================== */
 
 .divider {
   display: flex;
@@ -324,7 +447,7 @@
   font-size: 10.5px;
   font-weight: 600;
   letter-spacing: 0.5px;
-  margin: -4px 0;
+  margin: -6px 0;
 }
 
 .divider::before,
@@ -335,9 +458,13 @@
   background-color: #e3e6eb;
 }
 
+/* ========================================================
+   OTP BUTTON
+======================================================== */
+
 .otp-btn {
   width: 100%;
-  padding: 9px 16px;
+  padding: 8px 16px;
   background: #ffffff;
   color: #dd8a2e;
   border: 1.5px solid #dd8a2e;
@@ -356,10 +483,13 @@
   background-color: #fdf1e2;
 }
 
+/* ========================================================
+   FOOTER
+======================================================== */
 
 .register-footer {
   text-align: center;
-  margin-top: 10px;
+  margin-top: 8px;
   font-size: 12.5px;
   color: #4b5563;
 }
@@ -374,10 +504,18 @@
   text-decoration: underline;
 }
 
+/* ========================================================
+   RESPONSIVE
+======================================================== */
+
 @media (max-width: 1024px) {
   .register-wrapper {
     justify-content: center;
     padding: 40px 24px;
+  }
+
+  .register-hero {
+    display: none;
   }
 
   .register-shape {
@@ -425,6 +563,9 @@
   }
 }
 
+/* ========================================================
+   ACCESSIBILITY
+======================================================== */
 
 .register-form *:focus-visible {
   outline: 2px solid #dd8a2e;
