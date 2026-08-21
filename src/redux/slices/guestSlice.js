@@ -1,87 +1,87 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import roomService from "../../services/roomService";
+import guestService from "../../services/guestService";
 
 // ============================================================
-// GET ROOMS
+// GET GUESTS
 // ============================================================
 
-export const getRooms = createAsyncThunk(
-  "rooms/getRooms",
+export const getGuests = createAsyncThunk(
+  "guests/getGuests",
   async (_, { rejectWithValue }) => {
     try {
-        console.log("Fetching getrooms...");
-      const response = await roomService.getRooms();
+        console.log("Fetching guests...");
+      const response = await guestService.getGuests();
 
       return response;
     } catch (error) {
-        console.log("Error fetching rooms:", error);
+        console.log("Error fetching guests:", error);
       return rejectWithValue(
         error.response?.data?.message ||
-          "Failed to fetch rooms."
+          "Failed to fetch guests."
       );
     }
   }
 );
 
 // ============================================================
-// CREATE ROOM
+// CREATE GUEST
 // ============================================================
 
-export const createRoom = createAsyncThunk(
-  "rooms/createRoom",
+export const createGuest = createAsyncThunk(
+  "guests/createGuest",
 
-  async (roomData, { rejectWithValue }) => {
+  async (guestData, { rejectWithValue }) => {
     try {
       const response =
-        await roomService.createRoom(roomData);
+        await guestService.createGuest(guestData);
 
       return response;
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message ||
-          "Failed to create room."
+          "Failed to create guest."
       );
     }
   }
 );
 
 // ============================================================
-// UPDATE ROOM
+// UPDATE GUEST
 // ============================================================
 
-export const updateRoom = createAsyncThunk(
-  "rooms/updateRoom",
+export const updateGuest = createAsyncThunk(
+  "guests/updateGuest",
 
-  async ({ id, roomData }, { rejectWithValue }) => {
+  async ({ id, guestData }, { rejectWithValue }) => {
     try {
-      const response = await roomService.updateRoom(id, roomData);
+      const response = await guestService.updateGuest(id, guestData);
 
       return response;
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message ||
-          "Failed to update room."
+          "Failed to update guest."
       );
     }
   }
 );
 
 // ============================================================
-// DELETE ROOM
+// DELETE GUEST
 // ============================================================
 
-export const deleteRoom = createAsyncThunk(
-  "rooms/deleteRoom",
+export const deleteGuest = createAsyncThunk(
+  "guests/deleteGuest",
 
   async (id, { rejectWithValue }) => {
     try {
-      const response = await roomService.deleteRoom(id);
+      const response = await guestService.deleteGuest(id);
 
       return response;
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message ||
-          "Failed to delete room."
+          "Failed to delete guest."
       );
     }
   }
@@ -94,7 +94,7 @@ export const deleteRoom = createAsyncThunk(
 const storedUser = localStorage.getItem("hotel_user");
 
 const initialState = {
-  rooms: [],
+  guests: [],
   user: storedUser ? JSON.parse(storedUser) : null,
 
   token: localStorage.getItem("hotel_token") || null,
@@ -112,14 +112,14 @@ const initialState = {
 // SLICE
 // ============================================================
 
-const roomSlice = createSlice({
-  name: "rooms",
+const guestSlice = createSlice({
+  name: "guests",
 
   initialState,
 
   reducers: {
     logout: (state) => {
-      state.rooms = null;
+      state.guests = null;
       state.token = null;
       state.isAuthenticated = false;
       state.error = null;
@@ -136,75 +136,75 @@ const roomSlice = createSlice({
     // --------------------------------------------------------
 
     builder
-      .addCase(getRooms.pending, (state) => {
+      .addCase(getGuests.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
 
-      .addCase(getRooms.fulfilled, (state, action) => {
+      .addCase(getGuests.fulfilled, (state, action) => {
         state.loading = false;
-        state.rooms = action.payload;
+        state.guests = action.payload;
       })
 
-      .addCase(getRooms.rejected, (state, action) => {
+      .addCase(getGuests.rejected, (state, action) => {
         state.loading = false;
         state.error =
           action.payload ||
-          "Failed to fetch rooms.";
+          "Failed to fetch guests.";
       });
 
       // ============================================================
-// createRoom
+// createGuest
 // ============================================================
 
 builder
-  .addCase(createRoom.pending, (state) => {
+  .addCase(createGuest.pending, (state) => {
     state.loading = true;
     state.error = null;
   })
 
-  .addCase(createRoom.fulfilled, (state, action) => {
+  .addCase(createGuest.fulfilled, (state, action) => {
     state.loading = false;
     state.error = null;
-    state.rooms = action.payload;
+    state.guests = action.payload;
   })
 
-  .addCase(createRoom.rejected, (state, action) => {
+  .addCase(createGuest.rejected, (state, action) => {
     state.loading = false;
 
     state.error =
       action.payload ||
-      "Failed to create room";
+      "Failed to create guest";
   });
 
     // --------------------------------------------------------
-    // updateRoom
+    // updateGuest
     // --------------------------------------------------------
 
     builder
-      .addCase(updateRoom.pending, (state) => {
+      .addCase(updateGuest.pending, (state) => {
         state.loading = true;
       })
 
-      .addCase(updateRoom.fulfilled, (state, action) => {
+      .addCase(updateGuest.fulfilled, (state, action) => {
         state.loading = false;
-        state.rooms = action.payload;
+        state.guests = action.payload;
       })
 
-      .addCase(updateRoom.rejected, (state) => {
+      .addCase(updateGuest.rejected, (state) => {
         state.loading = false;
       });
 
     // --------------------------------------------------------
-    // deleteRoom
+    // deleteGuest
     // -------------------------------------------------------- 
-    builder.addCase(deleteRoom.pending, (state) => {
+    builder.addCase(deleteGuest.pending, (state) => {
       state.loading = true;
     })
 
-    .addCase(deleteRoom.fulfilled, (state, action) => {
+    .addCase(deleteGuest.fulfilled, (state, action) => {
       state.loading = false;
-      state.rooms = action.payload;
+      state.guests = action.payload;
     });
   },
 });
@@ -212,6 +212,6 @@ builder
 export const {
   logout,
   clearAuthError,
-} = roomSlice.actions;
+} = guestSlice.actions;
 
-export default roomSlice.reducer;
+export default guestSlice.reducer;

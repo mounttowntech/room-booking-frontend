@@ -1,87 +1,87 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import roomService from "../../services/roomService";
+import bookingService from "../../services/bookingService";
 
 // ============================================================
-// GET ROOMS
+// GET BOOKINGS
 // ============================================================
 
-export const getRooms = createAsyncThunk(
-  "rooms/getRooms",
+export const getBookings = createAsyncThunk(
+  "bookings/getBookings",
   async (_, { rejectWithValue }) => {
     try {
-        console.log("Fetching getrooms...");
-      const response = await roomService.getRooms();
+        console.log("Fetching getbookings...");
+      const response = await bookingService.getBookings();
 
       return response;
     } catch (error) {
-        console.log("Error fetching rooms:", error);
+        console.log("Error fetching bookings:", error);
       return rejectWithValue(
         error.response?.data?.message ||
-          "Failed to fetch rooms."
+          "Failed to fetch bookings."
       );
     }
   }
 );
 
 // ============================================================
-// CREATE ROOM
+// CREATE BOOKING
 // ============================================================
 
-export const createRoom = createAsyncThunk(
-  "rooms/createRoom",
+export const createBooking = createAsyncThunk(
+  "bookings/createBooking",
 
-  async (roomData, { rejectWithValue }) => {
+  async (bookingData, { rejectWithValue }) => {
     try {
       const response =
-        await roomService.createRoom(roomData);
+        await bookingService.createBooking(bookingData);
 
       return response;
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message ||
-          "Failed to create room."
+          "Failed to create booking."
       );
     }
   }
 );
 
 // ============================================================
-// UPDATE ROOM
+// UPDATE BOOKING
 // ============================================================
 
-export const updateRoom = createAsyncThunk(
-  "rooms/updateRoom",
+export const updateBooking = createAsyncThunk(
+  "bookings/updateBooking",
 
-  async ({ id, roomData }, { rejectWithValue }) => {
+  async ({ id, bookingData }, { rejectWithValue }) => {
     try {
-      const response = await roomService.updateRoom(id, roomData);
+      const response = await bookingService.updateBooking(id, bookingData);
 
       return response;
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message ||
-          "Failed to update room."
+          "Failed to update booking."
       );
     }
   }
 );
 
 // ============================================================
-// DELETE ROOM
+// DELETE BOOKING
 // ============================================================
 
-export const deleteRoom = createAsyncThunk(
-  "rooms/deleteRoom",
+export const deleteBooking = createAsyncThunk(
+  "bookings/deleteBooking",
 
   async (id, { rejectWithValue }) => {
     try {
-      const response = await roomService.deleteRoom(id);
+      const response = await bookingService.deleteBooking(id);
 
       return response;
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message ||
-          "Failed to delete room."
+          "Failed to delete booking."
       );
     }
   }
@@ -94,7 +94,6 @@ export const deleteRoom = createAsyncThunk(
 const storedUser = localStorage.getItem("hotel_user");
 
 const initialState = {
-  rooms: [],
   user: storedUser ? JSON.parse(storedUser) : null,
 
   token: localStorage.getItem("hotel_token") || null,
@@ -112,14 +111,14 @@ const initialState = {
 // SLICE
 // ============================================================
 
-const roomSlice = createSlice({
-  name: "rooms",
+const bookingSlice = createSlice({
+  name: "bookings",
 
   initialState,
 
   reducers: {
     logout: (state) => {
-      state.rooms = null;
+      state.bookings = null;
       state.token = null;
       state.isAuthenticated = false;
       state.error = null;
@@ -136,75 +135,76 @@ const roomSlice = createSlice({
     // --------------------------------------------------------
 
     builder
-      .addCase(getRooms.pending, (state) => {
+      .addCase(getBookings.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
 
-      .addCase(getRooms.fulfilled, (state, action) => {
+      .addCase(getBookings.fulfilled, (state, action) => {
+        console.log("getBookings fulfilled:", action.payload);
         state.loading = false;
-        state.rooms = action.payload;
+        state.bookings = action.payload;
       })
 
-      .addCase(getRooms.rejected, (state, action) => {
+      .addCase(getBookings.rejected, (state, action) => {
         state.loading = false;
         state.error =
           action.payload ||
-          "Failed to fetch rooms.";
+          "Failed to fetch bookings.";
       });
 
       // ============================================================
-// createRoom
+// createBooking
 // ============================================================
 
 builder
-  .addCase(createRoom.pending, (state) => {
+  .addCase(createBooking.pending, (state) => {
     state.loading = true;
     state.error = null;
   })
 
-  .addCase(createRoom.fulfilled, (state, action) => {
+  .addCase(createBooking.fulfilled, (state, action) => {
     state.loading = false;
     state.error = null;
-    state.rooms = action.payload;
+    state.bookings = action.payload;
   })
 
-  .addCase(createRoom.rejected, (state, action) => {
+  .addCase(createBooking.rejected, (state, action) => {
     state.loading = false;
 
     state.error =
       action.payload ||
-      "Failed to create room";
+      "Failed to create booking";
   });
 
     // --------------------------------------------------------
-    // updateRoom
+    // updateBooking
     // --------------------------------------------------------
 
     builder
-      .addCase(updateRoom.pending, (state) => {
+      .addCase(updateBooking.pending, (state) => {
         state.loading = true;
       })
 
-      .addCase(updateRoom.fulfilled, (state, action) => {
+      .addCase(updateBooking.fulfilled, (state, action) => {
         state.loading = false;
-        state.rooms = action.payload;
+        state.bookings = action.payload;
       })
 
-      .addCase(updateRoom.rejected, (state) => {
+      .addCase(updateBooking.rejected, (state) => {
         state.loading = false;
       });
 
     // --------------------------------------------------------
-    // deleteRoom
+    // deleteBooking
     // -------------------------------------------------------- 
-    builder.addCase(deleteRoom.pending, (state) => {
+    builder.addCase(deleteBooking.pending, (state) => {
       state.loading = true;
     })
 
-    .addCase(deleteRoom.fulfilled, (state, action) => {
+    .addCase(deleteBooking.fulfilled, (state, action) => {
       state.loading = false;
-      state.rooms = action.payload;
+      state.bookings = action.payload;
     });
   },
 });
@@ -212,6 +212,6 @@ builder
 export const {
   logout,
   clearAuthError,
-} = roomSlice.actions;
+} = bookingSlice.actions;
 
-export default roomSlice.reducer;
+export default bookingSlice.reducer;

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { yupResolver } from "@hookform/resolvers/yup";
+import toast from "react-hot-toast";
 import { clearAuthError, loginUser } from "../../redux/slices/authSlice";
 import {
   Mail,
@@ -19,6 +21,12 @@ import "./Login.css";
 // pointing at the same file so both screens match.
 // ------------------------------------------------------------
 import bgImage from "../../assets/regbg.png";
+import { useForm } from "react-hook-form";
+
+import Input from "../../components/common/Input";
+
+import Button from "../../components/common/Button";
+import { loginSchema } from "../../validations/authValidation";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -35,6 +43,27 @@ const Login = () => {
     email: "",
     password: "",
   });
+
+  // ==========================================================
+    // REACT HOOK FORM
+    // ==========================================================
+  
+    // const {
+    //   register,
+    //   handleSubmit,
+    //   formState: {
+    //     errors,
+    //   },
+    // } = useForm({
+    //   resolver: yupResolver(
+    //     loginSchema
+    //   ),
+  
+    //   defaultValues: {
+    //     email: "",
+    //     password: "",
+    //   },
+    // });
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -70,6 +99,19 @@ const Login = () => {
   // ==========================================================
   // SUBMIT
   // ==========================================================
+
+  const onSubmit = async (data) => {
+console.log("Login form submitted:", data);
+    const result = await dispatch(
+      loginUser(data)
+    );
+
+    if (loginUser.fulfilled.match(result)) {
+      navigate("/dashboard", {
+        replace: true,
+      });
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -172,6 +214,17 @@ const Login = () => {
                   placeholder="Enter your email"
                   required
                 />
+                {/* <Input
+        label="Email Address"
+        type="email"
+        name="email"
+        // value={formData.email}
+        // onChange={handleChange}
+        placeholder="Enter your email"
+        register={register}
+        errors={errors}
+        required
+      /> */}
               </div>
             </div>
 
@@ -189,6 +242,17 @@ const Login = () => {
                   placeholder="Enter your password"
                   required
                 />
+                {/* <Input
+        label="Password"
+        type="password"
+        name="password"
+        // value={formData.password}
+        // onChange={handleChange}
+        placeholder="Enter your password"
+        register={register}
+        errors={errors}
+        required
+      /> */}
                 <button
                   type="button"
                   className="login-password-toggle"
@@ -217,6 +281,18 @@ const Login = () => {
               )}
               {loading ? "Signing In..." : "Sign In"}
             </button>
+
+            {/* <Button
+        type="submit"
+        loading={loading}
+      >
+        {loading ? (
+                <span className="login-loading-spinner" />
+              ) : (
+                <LogInIcon size={18} />
+              )}
+              {loading ? "Signing In..." : "Sign In"}
+      </Button> */}
           </form>
 
           {/* ====================================================
