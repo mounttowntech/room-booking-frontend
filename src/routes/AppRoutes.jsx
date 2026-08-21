@@ -11,6 +11,8 @@ import ProtectedRoute from "../components/common/ProtectedRoute";
 import MainLayout from "../components/layout/MainLayout";
 
 import RoomList from "../pages/rooms/RoomList";
+import GuestList from "../pages/guests/GuestList";
+import BookingList from "../pages/bookings/BookingList";
 
 const AppRoutes = () => {
   return (
@@ -32,6 +34,8 @@ const AppRoutes = () => {
           <Route element={<MainLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/rooms" element={<RoomList />} />
+            <Route path="/guests" element={<GuestList />} />
+            <Route path="/bookings" element={<BookingList />} />
           </Route>
         </Route>
 

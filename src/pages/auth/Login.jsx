@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { yupResolver } from "@hookform/resolvers/yup";
+import toast from "react-hot-toast";
 import { clearAuthError, loginUser } from "../../redux/slices/authSlice";
 import {
   Mail,
@@ -19,6 +21,11 @@ import "./Login.css";
 // pointing at the same file so both screens match.
 // ------------------------------------------------------------
 import bgImage from "../../assets/regbg.png";
+
+import Input from "../../components/common/Input";
+
+import Button from "../../components/common/Button";
+import { loginSchema } from "../../validations/authValidation";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -163,7 +170,7 @@ const Login = () => {
               <label htmlFor="email">Email Address</label>
               <div className="login-input-wrapper">
                 <Mail size={17} className="login-input-icon" />
-                <input
+                {/* <input
                   id="email"
                   type="email"
                   name="email"
@@ -171,7 +178,18 @@ const Login = () => {
                   onChange={handleChange}
                   placeholder="Enter your email"
                   required
-                />
+                /> */}
+                <Input
+        label="Email Address"
+        type="email"
+        name="email"
+        // value={formData.email}
+        // onChange={handleChange}
+        placeholder="Enter your email"
+        register={register}
+        errors={errors}
+        required
+      />
               </div>
             </div>
 
@@ -180,7 +198,7 @@ const Login = () => {
               <label htmlFor="password">Password</label>
               <div className="login-input-wrapper">
                 <Lock size={17} className="login-input-icon" />
-                <input
+                {/* <input
                   id="password"
                   type={showPassword ? "text" : "password"}
                   name="password"
@@ -188,7 +206,18 @@ const Login = () => {
                   onChange={handleChange}
                   placeholder="Enter your password"
                   required
-                />
+                /> */}
+                <Input
+        label="Password"
+        type="password"
+        name="password"
+        // value={formData.password}
+        // onChange={handleChange}
+        placeholder="Enter your password"
+        register={register}
+        errors={errors}
+        required
+      />
                 <button
                   type="button"
                   className="login-password-toggle"
