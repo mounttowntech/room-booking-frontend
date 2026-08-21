@@ -11,7 +11,7 @@ const SafeIcon = ({ name, size = 20, className = "" }) => {
 const Sidebar = () => {
   const navItems = [
     { path: "/dashboard", label: "Dashboard", iconName: "LayoutGrid" },
-    { path: "/room-status", label: "Room Status", iconName: "BedDouble" },
+    { path: "/rooms", label: "Room", iconName: "BedDouble" },
     { path: "/bookings", label: "Bookings", iconName: "CalendarCheck" },
     { path: "/billing", label: "Billing", iconName: "Receipt" },
     { path: "/guests", label: "Guests", iconName: "Users" },
