@@ -94,6 +94,7 @@ export const deleteRoom = createAsyncThunk(
 const storedUser = localStorage.getItem("hotel_user");
 
 const initialState = {
+  rooms: [],
   user: storedUser ? JSON.parse(storedUser) : null,
 
   token: localStorage.getItem("hotel_token") || null,

@@ -14,23 +14,24 @@ const GuestForm = ({
       new FormData(event.target);
 
     const data = {
-      fullName:
+      name:
+        formData.get("name") ||
         formData.get("fullName"),
 
       email:
         formData.get("email"),
 
-      mobileNumber:
-        formData.get("mobileNumber"),
+      phone:
+        formData.get("phone"),
 
       gender:
         formData.get("gender"),
 
-      idProofType:
-        formData.get("idProofType"),
+      idType:
+        formData.get("idType"),
 
-      idProofNumber:
-        formData.get("idProofNumber"),
+      idNumber:
+        formData.get("idNumber"),
 
       address:
         formData.get("address"),
@@ -68,7 +69,7 @@ const GuestForm = ({
           </label>
 
           <input
-            name="fullName"
+            name="name"
             defaultValue={
               guest?.fullName ||
               guest?.name ||
@@ -84,17 +85,17 @@ const GuestForm = ({
         <div className="form-group">
 
           <label>
-            Mobile Number *
+            Phone Number *
           </label>
 
           <input
-            name="mobileNumber"
+            name="phone"
             type="tel"
             defaultValue={
               guest?.phone ||
               ""
             }
-            placeholder="Enter mobile number"
+            placeholder="Enter phone number"
             required
           />
 
@@ -160,7 +161,7 @@ const GuestForm = ({
           </label>
 
           <select
-            name="idProofType"
+            name="idType"
             defaultValue={
               guest?.idType || ""
             }
@@ -170,7 +171,7 @@ const GuestForm = ({
               Select ID proof
             </option>
 
-            <option value="aadhar">
+            <option value="aadhaar">
               Aadhaar
             </option>
 
@@ -202,7 +203,7 @@ const GuestForm = ({
           </label>
 
           <input
-            name="idProofNumber"
+            name="idNumber"
             defaultValue={
               guest?.idNumber ||
               ""
