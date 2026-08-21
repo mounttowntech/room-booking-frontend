@@ -362,10 +362,10 @@ const Register = () => {
             </div>
 
             {/* OTP BUTTON */}
-            <button type="button" className="otp-btn">
+            {/* <button type="button" className="otp-btn">
               <Smartphone size={18} />
               Sign up with OTP
-            </button>
+            </button> */}
           </form>
 
           {/* ====================================================
