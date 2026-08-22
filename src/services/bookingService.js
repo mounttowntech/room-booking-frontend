@@ -42,6 +42,20 @@ const bookingService = {
       { reason }
     );
     return response.data;
+  },
+  //check-in booking
+  checkInBooking: async (id) => {
+    const response = await apiClient.put(
+      `/booking/check-in/${id}`
+    );
+    return response.data;
+  },
+  //check-out booking
+  checkOutBooking: async (id) => {
+    const response = await apiClient.put(
+      `/booking/check-out/${id}`
+    );
+    return response.data;
   }
 };
 

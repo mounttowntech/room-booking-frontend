@@ -1592,6 +1592,329 @@
   }
 }
 
+/* ============================================================
+   CHECK-IN / CHECK-OUT MODAL
+============================================================ */
+
+.check-action-modal {
+  width: 100%;
+  padding: 4px 2px 2px;
+}
+
+
+/* ============================================================
+   HEADER
+============================================================ */
+
+.check-action-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 4px 0 20px;
+  border-bottom: 1px solid #e8ebf0;
+}
+
+.check-action-icon {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  font-size: 21px;
+  font-weight: 700;
+
+  background: #ecfdf3;
+  color: #16a34a;
+}
+
+.check-action-header h3 {
+  margin: 0 0 5px;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  color: #172033;
+}
+
+.check-action-header p {
+  margin: 0;
+
+  font-size: 13px;
+  line-height: 1.5;
+
+  color: #667085;
+}
+
+
+/* ============================================================
+   BOOKING DETAILS
+============================================================ */
+
+.check-action-details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 12px;
+
+  margin-top: 20px;
+}
+
+.check-action-details .booking-detail-item {
+  min-height: 68px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 13px 15px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e7ebf0;
+  border-radius: 10px;
+}
+
+.check-action-details .booking-detail-item span {
+  margin-bottom: 6px;
+
+  font-size: 11px;
+  font-weight: 500;
+
+  color: #667085;
+}
+
+.check-action-details .booking-detail-item strong {
+  font-size: 13px;
+  font-weight: 650;
+
+  color: #1d2939;
+
+  word-break: break-word;
+}
+
+
+/* ============================================================
+   HIGHLIGHT BOOKING NUMBER
+============================================================ */
+
+.check-action-details
+.booking-detail-item:first-child {
+  background: #f5f9ff;
+  border-color: #d9e8ff;
+}
+
+.check-action-details
+.booking-detail-item:first-child strong {
+  color: #2563eb;
+}
+
+
+/* ============================================================
+   WARNING
+============================================================ */
+
+.check-action-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  margin-top: 20px;
+  padding: 14px 16px;
+
+  border: 1px solid #fde7b2;
+  border-radius: 10px;
+
+  background: #fffbeb;
+}
+
+.check-action-warning > span {
+  width: 25px;
+  height: 25px;
+  min-width: 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #fef3c7;
+  color: #d97706;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.check-action-warning p {
+  margin: 1px 0 0;
+
+  font-size: 12px;
+  line-height: 1.55;
+
+  color: #92400e;
+}
+
+
+/* ============================================================
+   ACTIONS
+============================================================ */
+
+.check-action-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 24px;
+  padding-top: 18px;
+
+  border-top: 1px solid #e8ebf0;
+}
+
+.check-action-actions button {
+  min-height: 40px;
+
+  padding: 0 18px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.check-action-actions button:active {
+  transform: translateY(1px);
+}
+
+
+/* ============================================================
+   SECONDARY BUTTON
+============================================================ */
+
+.check-action-actions .secondary-button {
+  background: #ffffff;
+
+  border: 1px solid #d0d5dd;
+
+  color: #344054;
+}
+
+.check-action-actions .secondary-button:hover {
+  background: #f9fafb;
+}
+
+
+/* ============================================================
+   PRIMARY BUTTON
+============================================================ */
+
+/* .check-action-actions .primary-button {
+  background: #2563eb;
+
+  border: 1px solid #2563eb;
+
+  color: #ffffff;
+} */
+
+/* .check-action-actions .primary-button:hover {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+} */
+
+
+/* ============================================================
+   CHECK-IN SPECIFIC
+============================================================ */
+
+.check-action-modal:has(
+  .check-action-header h3
+) .check-action-icon {
+  background: #ecfdf3;
+  color: #16a34a;
+}
+
+
+/* ============================================================
+   CHECK-OUT SPECIFIC
+============================================================ */
+
+.check-action-modal.check-out-modal
+.check-action-icon {
+  background: #fff7ed;
+  color: #ea580c;
+}
+
+.check-action-modal.check-out-modal
+.check-action-warning {
+  border-color: #fed7aa;
+  background: #fff7ed;
+}
+
+.check-action-modal.check-out-modal
+.check-action-warning > span {
+  background: #ffedd5;
+  color: #ea580c;
+}
+
+.check-action-modal.check-out-modal
+.check-action-warning p {
+  color: #9a3412;
+}
+
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+
+@media (max-width: 700px) {
+
+  .check-action-details {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .check-action-header {
+    align-items: flex-start;
+  }
+
+  .check-action-icon {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+  }
+
+  .check-action-details {
+    grid-template-columns: 1fr;
+  }
+
+  .check-action-actions {
+    flex-direction: column-reverse;
+  }
+
+  .check-action-actions button {
+    width: 100%;
+  }
+
+}
+
 
 
 

@@ -111,6 +111,48 @@ export const cancelBooking = createAsyncThunk(
 );
 
 // ============================================================
+// Check-in BOOKING
+// ============================================================
+
+export const checkInBooking = createAsyncThunk(
+  "bookings/checkInBooking",
+
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await bookingService.checkInBooking(id);
+
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message ||
+          "Failed to check in booking."
+      );
+    }
+  }
+);
+
+// ============================================================
+// Check-out BOOKING
+// ============================================================
+
+export const checkOutBooking = createAsyncThunk(
+  "bookings/checkOutBooking",
+
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await bookingService.checkOutBooking(id);
+
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message ||
+          "Failed to check out booking."
+      );
+    }
+  }
+);
+
+// ============================================================
 // INITIAL STATE
 // ============================================================
 
@@ -239,6 +281,30 @@ builder
       state.loading = false;
       state.bookings = action.payload;
     }).addAsyncThunk(cancelBooking.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // --------------------------------------------------------
+    // checkInBooking
+    // -------------------------------------------------------- 
+    builder.addCase(checkInBooking.pending, (state) => {
+      state.loading = true;
+    }).addAsyncThunk(checkInBooking.fulfilled, (state, action) => {
+      state.loading = false;
+      state.bookings = action.payload;
+    }).addAsyncThunk(checkInBooking.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // --------------------------------------------------------
+    // checkOutBooking
+    // -------------------------------------------------------- 
+    builder.addCase(checkOutBooking.pending, (state) => {
+      state.loading = true;
+    }).addAsyncThunk(checkOutBooking.fulfilled, (state, action) => {
+      state.loading = false;
+      state.bookings = action.payload;
+    }).addAsyncThunk(checkOutBooking.rejected, (state) => {
       state.loading = false;
     });
   },

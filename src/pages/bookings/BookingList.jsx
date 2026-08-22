@@ -10,6 +10,8 @@ import {
   getBookings,
   deleteBooking,
   cancelBooking,
+  checkInBooking,
+  checkOutBooking
 } from "../../redux/slices/bookingSlice";
 
 import toast from "react-hot-toast";
@@ -94,6 +96,9 @@ const [selectedBooking, setSelectedBooking] = useState(null);
 
   const [cancellationReason, setCancellationReason] =
   useState("");
+
+  const [selectedGuestCheckInBooking, setSelectedGuestCheckInBooking] = useState(null);
+const [selectedGuestCheckOutBooking, setSelectedGuestCheckOutBooking] = useState(null);
 
 
   // ==========================================================
@@ -536,10 +541,13 @@ const [selectedBooking, setSelectedBooking] = useState(null);
   };
 
   const handleClose = () => {
+    setOpenActionId(null);
   setIsModalOpen(false);
   setSelectedBooking(null);
   setCancelBookingDetails(null);
   setViewBookingDetails(null);
+  setSelectedGuestCheckInBooking(null);
+  setSelectedGuestCheckOutBooking(null);
   setCancellationReason("");
 };
 
@@ -730,6 +738,77 @@ const handleConfirmCancel = async () => {
   setCancelBookingDetails(booking);
   setSelectedBooking(null);
   setIsModalOpen(true);
+};
+
+const handleCheckInBooking = (booking) => {
+  setSelectedGuestCheckInBooking(booking);
+  setIsModalOpen(true);
+  
+};
+
+const handleCheckOutBooking = (booking) => {
+  setSelectedGuestCheckOutBooking(booking);
+  setIsModalOpen(true);
+};
+
+const handleConfirmCheckIn = async () => {
+  if (!selectedGuestCheckInBooking?._id) return;
+
+  try {
+    const result = await dispatch(checkInBooking(selectedGuestCheckInBooking._id));
+    if (checkInBooking.fulfilled.match(result)) {
+      toast.success("Check-in successful");
+      handleClose();
+      fetchBookings();
+    }
+
+    if (checkInBooking.rejected.match(result)) {
+      toast.error(
+        result.payload ||
+          "Failed to check in booking"
+      );
+      handleClose();
+      fetchBookings();
+    }
+
+
+
+
+  } catch (error) {
+
+    console.error("Check-in failed:", error);
+
+  }
+};
+
+
+const handleConfirmCheckOut = async () => {
+  if (!selectedGuestCheckOutBooking?._id) return;
+
+  try {
+
+    // API CALL HERE
+    const result = await dispatch(checkOutBooking(selectedGuestCheckOutBooking._id));
+    if (checkOutBooking.fulfilled.match(result)) {
+      toast.success("Check-out successful");
+      handleClose();
+      fetchBookings();
+    }
+
+    if (checkOutBooking.rejected.match(result)) {
+      toast.error(
+        result.payload ||
+          "Failed to check out booking"
+      );
+      handleClose();
+      fetchBookings();
+    }
+
+  } catch (error) {
+
+    console.error("Check-out failed:", error);
+
+  }
 };
 
 
@@ -1517,8 +1596,7 @@ const handleConfirmCancel = async () => {
 
                               {/* VIEW */}
 
-                              <button
-                                type="button"
+                              <button  type="button"
                                 onClick={() =>
                                   handleViewBooking(
                                     booking
@@ -1553,6 +1631,44 @@ const handleConfirmCancel = async () => {
                                 Edit booking
 
                               </button>
+
+                              {/* check in */}
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  handleCheckInBooking(
+                                    booking
+                                  )
+                                }
+                              >
+
+                                <span>
+                                  ✔
+                                </span>
+
+                                Check in
+
+                              </button>
+
+                              {/* check out */}
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  handleCheckOutBooking(
+                                    booking
+                                  )
+                                }
+                              >
+
+                                <span>
+                                  ⬇
+                                </span>
+
+                                Check out
+
+                              </button>
+
+
 
 
                               {/* CANCEL */}
@@ -1741,9 +1857,13 @@ const handleConfirmCancel = async () => {
             ? "Booking Details"
             : cancelBookingDetails
               ? "Cancel Booking"
-              : selectedBooking
-                ? "Edit Booking"
-                : "New Booking"
+              : selectedGuestCheckInBooking
+                ? "Check-in Confirmation"
+                : selectedGuestCheckOutBooking
+                  ? "Check-out Confirmation"
+                  : selectedBooking
+                    ? "Edit Booking"
+                    : "New Booking"
         }
         width="900px"
       >
@@ -2419,7 +2539,324 @@ const handleConfirmCancel = async () => {
 
           </div>
 
-        ) : (
+        ) : selectedGuestCheckInBooking ? (
+
+              <div className="check-action-modal">
+
+                <div className="check-action-header">
+
+                  <div className="check-action-icon">
+                    ✔
+                  </div>
+
+                  <div>
+                    <h3>Confirm Check-in</h3>
+
+                    <p>
+                      Are you sure you want to check in this guest?
+                    </p>
+                  </div>
+
+                </div>
+
+
+                {/* BOOKING DETAILS */}
+
+                <div className="check-action-details">
+
+                  <div className="booking-detail-item">
+
+                    <span>Booking No</span>
+
+                    <strong>
+                      {selectedGuestCheckInBooking?.bookingNo || "—"}
+                    </strong>
+
+                  </div>
+
+
+                  <div className="booking-detail-item">
+
+                    <span>Guest</span>
+
+                    <strong>
+                      {selectedGuestCheckInBooking?.guestId?.name ||
+                        selectedGuestCheckInBooking?.guest?.name ||
+                        "—"}
+                    </strong>
+
+                  </div>
+
+
+                  <div className="booking-detail-item">
+
+                    <span>Room</span>
+
+                    <strong>
+                      {selectedGuestCheckInBooking?.roomId?.roomNumber
+                        ? `Room ${selectedGuestCheckInBooking.roomId.roomNumber}`
+                        : selectedGuestCheckInBooking?.room?.roomNumber
+                          ? `Room ${selectedGuestCheckInBooking.room.roomNumber}`
+                          : "—"}
+                    </strong>
+
+                  </div>
+
+
+                  <div className="booking-detail-item">
+
+                    <span>Check-in Date</span>
+
+                    <strong>
+                      {formatBookingDate(
+                        selectedGuestCheckInBooking?.checkInDate
+                      )}
+                    </strong>
+
+                  </div>
+
+
+                  <div className="booking-detail-item">
+
+                    <span>Check-out Date</span>
+
+                    <strong>
+                      {formatBookingDate(
+                        selectedGuestCheckInBooking?.checkOutDate
+                      )}
+                    </strong>
+
+                  </div>
+
+
+                  <div className="booking-detail-item">
+
+                    <span>Booking Status</span>
+
+                    <strong>
+                      {formatBookingStatus(
+                        selectedGuestCheckInBooking?.bookingStatus
+                      )}
+                    </strong>
+
+                  </div>
+
+                </div>
+
+
+                {/* WARNING */}
+
+                <div className="check-action-warning">
+
+                  <span>⚠</span>
+
+                  <p>
+                    Once checked in, this booking will be marked
+                    as checked-in and the room will become occupied.
+                  </p>
+
+                </div>
+
+
+                {/* ACTIONS */}
+
+                <div className="check-action-actions">
+
+                  <button
+                    type="button"
+                    className="secondary-button"
+                    onClick={handleClose}
+                  >
+                    Cancel
+                  </button>
+
+                  <button
+                    type="button"
+                    className="primary-button"
+                    onClick={handleConfirmCheckIn}
+                  >
+                    Confirm Check-in
+                  </button>
+
+                </div>
+
+              </div>
+        ) : selectedGuestCheckOutBooking ? (
+
+                <div className="check-action-modal">
+
+                  <div className="check-action-header">
+
+                    <div className="check-action-icon">
+                      ⬇
+                    </div>
+
+                    <div>
+                      <h3>Confirm Check-out</h3>
+
+                      <p>
+                        Are you sure you want to check out this guest?
+                      </p>
+                    </div>
+
+                  </div>
+
+
+                  {/* BOOKING DETAILS */}
+
+                  <div className="check-action-details">
+
+                    <div className="booking-detail-item">
+
+                      <span>Booking No</span>
+
+                      <strong>
+                        {selectedGuestCheckOutBooking?.bookingNo || "—"}
+                      </strong>
+
+                    </div>
+
+
+                    <div className="booking-detail-item">
+
+                      <span>Guest</span>
+
+                      <strong>
+                        {selectedGuestCheckOutBooking?.guestId?.name ||
+                          selectedGuestCheckOutBooking?.guest?.name ||
+                          "—"}
+                      </strong>
+
+                    </div>
+
+
+                    <div className="booking-detail-item">
+
+                      <span>Room</span>
+
+                      <strong>
+                        {selectedGuestCheckOutBooking?.roomId?.roomNumber
+                          ? `Room ${selectedGuestCheckOutBooking.roomId.roomNumber}`
+                          : selectedGuestCheckOutBooking?.room?.roomNumber
+                            ? `Room ${selectedGuestCheckOutBooking.room.roomNumber}`
+                            : "—"}
+                      </strong>
+
+                    </div>
+
+
+                    <div className="booking-detail-item">
+
+                      <span>Check-in</span>
+
+                      <strong>
+                        {formatBookingDate(
+                          selectedGuestCheckOutBooking.checkInDate
+                        )}
+                      </strong>
+
+                    </div>
+
+
+                    <div className="booking-detail-item">
+
+                      <span>Check-out</span>
+
+                      <strong>
+                        {formatBookingDate(
+                          selectedGuestCheckOutBooking.checkOutDate
+                        )}
+                      </strong>
+
+                    </div>
+
+
+                    <div className="booking-detail-item">
+
+                      <span>Total Amount</span>
+
+                      <strong>
+                        {formatCurrency(
+                          selectedGuestCheckOutBooking.totalAmount
+                        )}
+                      </strong>
+
+                    </div>
+
+
+                    <div className="booking-detail-item">
+
+                      <span>Paid Amount</span>
+
+                      <strong>
+                        {formatCurrency(
+                          selectedGuestCheckOutBooking.paidAmount
+                        )}
+                      </strong>
+
+                    </div>
+
+
+                    <div className="booking-detail-item">
+
+                      <span>Due Amount</span>
+
+                      <strong>
+                        {formatCurrency(
+                          selectedGuestCheckOutBooking.dueAmount
+                        )}
+                      </strong>
+
+                    </div>
+
+                  </div>
+
+
+                  {/* WARNING */}
+
+                  <div className="check-action-warning">
+
+                    <span>⚠</span>
+
+                    <p>
+                      Once checked out, the booking will be marked
+                      as checked-out and the room will be moved to
+                      cleaning status.
+                    </p>
+
+                  </div>
+
+
+                  {/* ACTIONS */}
+
+                  <div className="check-action-actions">
+
+                    <button
+                      type="button"
+                      className="secondary-button"
+                      onClick={handleClose}
+                    >
+                      Cancel
+                    </button>
+
+                    <button
+                      type="button"
+                      className="primary-button"
+                      onClick={handleConfirmCheckOut}
+                    >
+                      Confirm Check-out
+                    </button>
+
+                  </div>
+
+                </div>
+
+          /* ======================================================
+             CHECK-OUT BOOKING
+          ====================================================== */
+
+        ) :
+         (
 
           /* ======================================================
              ADD / EDIT BOOKING
