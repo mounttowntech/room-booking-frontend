@@ -87,6 +87,29 @@ export const deleteBooking = createAsyncThunk(
   }
 );
 
+
+// ============================================================
+// CANCEL BOOKING
+// ============================================================
+
+export const cancelBooking = createAsyncThunk(
+  "bookings/cancelBooking",
+
+  async ({id, reason}, { rejectWithValue }) => {
+    try {
+      console.log("Cancelling booking with ID:", id, "Reason:", reason);
+      const response = await bookingService.cancelBooking({id, reason});
+
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message ||
+          "Failed to cancel booking."
+      );
+    }
+  }
+);
+
 // ============================================================
 // INITIAL STATE
 // ============================================================
@@ -205,6 +228,18 @@ builder
     .addCase(deleteBooking.fulfilled, (state, action) => {
       state.loading = false;
       state.bookings = action.payload;
+    });
+
+    // --------------------------------------------------------
+    // cancelBooking
+    // -------------------------------------------------------- 
+    builder.addCase(cancelBooking.pending, (state) => {
+      state.loading = true;
+    }).addAsyncThunk(cancelBooking.fulfilled, (state, action) => {
+      state.loading = false;
+      state.bookings = action.payload;
+    }).addAsyncThunk(cancelBooking.rejected, (state) => {
+      state.loading = false;
     });
   },
 });

@@ -1,3 +1,12 @@
+:root {
+  --color-blue: #112138;
+  --color-deep-orange: #b47319;
+  --color-offwhite: #fdfdfd;
+  --color-sandel: #fbf3eb;
+  --color-page-bg: #f8faf8;
+  --font-family: "Nunito Sans", sans-serif;
+}
+
 /* ============================================================
    ROOM LIST PAGE
 ============================================================ */
@@ -53,7 +62,7 @@
 .primary-button {
   border: 0;
   border-radius: 8px;
-  background: #2563eb;
+  background: var(--color-deep-orange);
   color: #ffffff;
   padding: 11px 17px;
   min-height: 42px;
@@ -74,10 +83,10 @@
     box-shadow 0.2s ease;
 }
 
-.primary-button:hover {
+/* .primary-button:hover {
   background: #1d4ed8;
   box-shadow: 0 5px 12px rgba(37, 99, 235, 0.18);
-}
+} */
 
 .primary-button:active {
   transform: translateY(1px);

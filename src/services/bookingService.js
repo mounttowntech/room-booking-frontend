@@ -36,6 +36,13 @@ const bookingService = {
 
     return response.data;
   },
+  cancelBooking: async ({id, reason}) => {
+    const response = await apiClient.put(
+      `/booking/cancel/${id}`,
+      { reason }
+    );
+    return response.data;
+  }
 };
 
 export default bookingService;

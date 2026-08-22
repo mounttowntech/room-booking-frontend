@@ -356,7 +356,7 @@ const RoomForm = ({ room, onSubmit, onClose, loading = false }) => {
       <button
         type="button"
         onClick={handleAddAmenity}
-        className="h-10 shrink-0 rounded-lg bg-gray-900 px-4 text-xs font-medium text-white transition hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-300"
+        className="h-10 shrink-0 rounded-lg bg-[#BE7127] px-4 text-xs font-medium text-white transition hover:bg-[#9a6012] focus:outline-none focus:ring-2 focus:ring-gray-300"
       >
         Add
       </button>
@@ -437,7 +437,7 @@ const RoomForm = ({ room, onSubmit, onClose, loading = false }) => {
         className="peer sr-only"
       />
 
-      <span className="absolute inset-0 rounded-full bg-gray-300 transition-colors peer-checked:bg-blue-600 peer-focus:ring-4 peer-focus:ring-blue-100" />
+      <span className="absolute inset-0 rounded-full bg-[#BE7127] transition-colors peer-checked:bg-[#9a6012] peer-focus:ring-4 peer-focus:ring-blue-100" />
 
       <span className="absolute left-[2px] top-[2px] h-5 w-5 rounded-full bg-white shadow-sm transition-transform peer-checked:translate-x-5" />
     </label>
@@ -461,7 +461,7 @@ const RoomForm = ({ room, onSubmit, onClose, loading = false }) => {
     <button
       type="submit"
       disabled={loading}
-      className="h-9 rounded-lg bg-blue-600 px-4 text-xs font-medium text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-100 disabled:cursor-not-allowed disabled:opacity-50"
+      className="h-9 rounded-lg bg-[#BE7127] px-4 text-xs font-medium text-white shadow-sm transition hover:bg-[#9a6012] focus:outline-none focus:ring-2 focus:ring-blue-100 disabled:cursor-not-allowed disabled:opacity-50"
     >
       {loading
         ? "Saving..."

@@ -63,7 +63,7 @@ const Dashboard = () => {
         </div>
         <button
           className="new-booking-btn"
-          onClick={() => navigate("/bookings/new")}
+          onClick={() => navigate("/bookings")}
         >
           <Plus size={18} />
           <span>New Booking</span>
@@ -129,7 +129,7 @@ const Dashboard = () => {
           </div>
 
           <div className="booking-table-wrapper">
-            <table className="booking-table">
+            <table className="dashbaord-booking-table">
               <thead>
                 <tr>
                   <th>Booking ID</th>

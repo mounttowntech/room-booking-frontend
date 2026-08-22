@@ -199,40 +199,22 @@ const Register = () => {
             </div>
 
             {/* PHONE NUMBER */}
-            <div className="form-group full-width">
-              <label htmlFor="mobileNumber">Phone Number</label>
-              <div className="input-wrapper">
-                <Phone size={17} className="input-icon" />
-                <input
-                  id="mobileNumber"
-                  type="tel"
-                  name="mobileNumber"
-                  value={formData.mobileNumber}
-                  onChange={handleChange}
-                  placeholder="Enter your phone number"
-                  required
-                />
-              </div>
-            </div>
-
-            {/* USERNAME & ROLE ROW */}
             <div className="form-row">
               <div className="form-group">
-                <label htmlFor="username">Username</label>
+                <label htmlFor="mobileNumber">Phone Number</label>
                 <div className="input-wrapper">
-                  <User size={17} className="input-icon" />
+                  <Phone size={17} className="input-icon" />
                   <input
-                    id="username"
-                    type="text"
-                    name="username"
-                    value={formData.username}
+                    id="mobileNumber"
+                    type="tel"
+                    name="mobileNumber"
+                    value={formData.mobileNumber}
                     onChange={handleChange}
-                    placeholder="Choose a username"
+                    placeholder="Enter your phone number"
                     required
                   />
                 </div>
               </div>
-
               <div className="form-group">
                 <label htmlFor="role">Account Role</label>
                 <div className="input-wrapper">
@@ -250,7 +232,46 @@ const Register = () => {
                     <option value="housekeeping">Housekeeping</option>
                   </select>
                 </div>
+
               </div>
+            </div>
+
+            {/* USERNAME & ROLE ROW */}
+            <div className="form-row">
+              {/* <div className="form-group">
+                <label htmlFor="username">Username</label>
+                <div className="input-wrapper">
+                  <User size={17} className="input-icon" />
+                  <input
+                    id="username"
+                    type="text"
+                    name="username"
+                    value={formData.username}
+                    onChange={handleChange}
+                    placeholder="Choose a username"
+                    required
+                  />
+                </div>
+              </div> */}
+
+              {/* <div className="form-group">
+                <label htmlFor="role">Account Role</label>
+                <div className="input-wrapper">
+                  <Briefcase size={17} className="input-icon" />
+                  <select
+                    id="role"
+                    name="role"
+                    value={formData.role}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="admin">Admin</option>
+                    <option value="manager">Manager</option>
+                    <option value="receptionist">Receptionist</option>
+                    <option value="housekeeping">Housekeeping</option>
+                  </select>
+                </div>
+              </div> */}
             </div>
 
             {/* PASSWORD & CONFIRM PASSWORD ROW */}
