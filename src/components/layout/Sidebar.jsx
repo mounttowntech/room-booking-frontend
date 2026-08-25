@@ -1,77 +1,48 @@
 import { NavLink } from "react-router-dom";
+import * as LucideIcons from "lucide-react";
+import "./Sidebar.css";
+
+import logo from "../../assets/roomlogo.png";
+const SafeIcon = ({ name, size = 20, className = "" }) => {
+  const IconComponent = LucideIcons[name] || LucideIcons.HelpCircle;
+  return <IconComponent size={size} className={className} />;
+};
 
 const Sidebar = () => {
+  const navItems = [
+    { path: "/dashboard", label: "Dashboard", iconName: "LayoutGrid" },
+    { path: "/rooms", label: "Room", iconName: "BedDouble" },
+    { path: "/bookings", label: "Bookings", iconName: "CalendarCheck" },
+    { path: "/billing", label: "Billing", iconName: "Receipt" },
+    { path: "/guests", label: "Guests", iconName: "Users" },
+    { path: "/payments", label: "Payments", iconName: "Wallet" },
+    { path: "/housekeeping", label: "Housekeeping", iconName: "Sparkles" },
+    { path: "/reports", label: "Reports", iconName: "BarChart3" },
+  ];
+
   return (
     <aside className="sidebar">
-
-      <div className="sidebar-logo">
-        Hotel PMS
+      {/* Header / Logo Section */}
+      <div className="sidebar-header">
+        <div className="logo-icon-wrapper">
+          <img src={logo} alt="WonderBill Logo" className="sidebar-logo" />
+        </div>
+       
       </div>
 
-      <nav>
-
-        <NavLink to="/dashboard">
-          Dashboard
-        </NavLink>
-
-        <div className="menu-title">
-          FRONT DESK
-        </div>
-
-        <NavLink to="/bookings">
-          Bookings
-        </NavLink>
-
-        <NavLink to="/guests">
-          Guests
-        </NavLink>
-
-        <div className="menu-title">
-          ROOMS
-        </div>
-
-        <NavLink to="/rooms">
-          Rooms
-        </NavLink>
-
-        <div className="menu-title">
-          OPERATIONS
-        </div>
-
-        <NavLink to="/housekeeping">
-          Housekeeping
-        </NavLink>
-
-        <div className="menu-title">
-          FINANCE
-        </div>
-
-        <NavLink to="/invoices">
-          Invoices
-        </NavLink>
-
-        <NavLink to="/payments">
-          Payments
-        </NavLink>
-
-        <div className="menu-title">
-          REPORTS
-        </div>
-
-        <NavLink to="/reports">
-          Reports
-        </NavLink>
-
-        <div className="menu-title">
-          SETTINGS
-        </div>
-
-        <NavLink to="/settings">
-          Settings
-        </NavLink>
-
+      {/* Navigation Links */}
+      <nav className="sidebar-nav">
+        {navItems.map((item) => (
+          <NavLink
+            key={item.path}
+            to={item.path}
+            className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}
+          >
+            <SafeIcon name={item.iconName} size={20} className="nav-icon" />
+            <span className="nav-label">{item.label}</span>
+          </NavLink>
+        ))}
       </nav>
-
     </aside>
   );
 };

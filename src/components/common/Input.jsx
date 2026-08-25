@@ -2,39 +2,28 @@ const Input = ({
   label,
   type = "text",
   name,
-  // value,
-  // onChange,
-  placeholder = "",
-  register,
-  errors,
+  value,
+  onChange,
+  placeholder,
   required = false,
 }) => {
-  // console.log("register_yup", register);
   return (
     <div className="input-group">
       {label && (
         <label htmlFor={name}>
           {label}
-          {required && <span className="required">*</span>}
         </label>
       )}
 
       <input
         id={name}
-        // name={name}
+        name={name}
         type={type}
-        // value={value}
-        // onChange={onChange}
+        value={value}
+        onChange={onChange}
         placeholder={placeholder}
-        {...register(name)}
+        required={required}
       />
-
-      {errors && errors[name] && (
-        <p className="error-message">
-          {errors[name].message}
-        </p>
-      )}
-
     </div>
   );
 };

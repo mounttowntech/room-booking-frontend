@@ -47,7 +47,7 @@
    PRIMARY BUTTON
 ============================================================ */
 
-.guest-list-page .primary-button {
+/* .guest-list-page .primary-button {
   border: 0;
   border-radius: 7px;
   padding: 11px 17px;
@@ -56,11 +56,11 @@
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-}
+} */
 
-.guest-list-page .primary-button:hover {
+/* .guest-list-page .primary-button:hover {
   background: #075bc9;
-}
+} */
 
 .button-icon {
   margin-right: 6px;

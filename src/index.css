@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+
+:root {
+  --color-blue: #112138;
+  --color-deep-orange: #b47319;
+  --color-offwhite: #fdfdfd;
+  --color-sandel: #fbf3eb;
+  --color-page-bg: #f8faf8;
+  --font-family: "Nunito Sans", sans-serif;
+}
+
 /* * {
   margin: 0;
   padding: 0;
@@ -128,11 +138,17 @@ body {
   height: 46px;
   border: none;
   border-radius: 7px;
-  background: #2563eb;
+  background: var(--color-deep-orange);
+  /* background: #2563eb; */
   color: white;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
+}
+
+.primary-btn:hover {
+  background-color: #9a6012;
+  transform: translateY(-1px);
 }
 
 .primary-btn:disabled {
@@ -160,7 +176,7 @@ body {
   display: flex;
   min-height: 100vh;
 }
-
+/* 
 .sidebar {
   width: 230px;
   min-height: 100vh;
@@ -192,7 +208,7 @@ body {
 .sidebar nav a.active {
   background: #2563eb;
   color: white;
-}
+} */
 
 .menu-title {
   font-size: 11px;
@@ -234,9 +250,9 @@ body {
   cursor: pointer;
 }
 
-.page-content {
+/* .page-content {
   padding: 25px;
-}
+} */
 
 /* ============================================================
    DASHBOARD
@@ -264,4 +280,85 @@ body {
 
 .dashboard-card h2 {
   font-size: 28px;
+}
+
+
+/* ============================================================
+   SEARCH
+============================================================ */
+
+.search-box {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  width: 340px;
+}
+
+.search-box input {
+  width: 100%;
+  height: 38px;
+
+  padding: 0 36px;
+
+  border: 1px solid #d5dce5;
+  border-radius: 8px;
+
+  outline: none;
+
+  background: #fff;
+
+  color: #111827;
+  font-size: 13px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.search-box input::placeholder {
+  color: #94a3b8;
+}
+
+.search-box input:focus {
+  border-color: #0b67df;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(11, 103, 223, 0.08);
+}
+
+.search-icon {
+  position: absolute;
+  left: 13px;
+
+  color: #64748b;
+
+  font-size: 17px;
+
+  pointer-events: none;
+}
+
+.clear-search {
+  position: absolute;
+  right: 8px;
+
+  width: 24px;
+  height: 24px;
+
+  border: 0;
+  border-radius: 50%;
+
+  background: transparent;
+
+  color: #64748b;
+
+  cursor: pointer;
+
+  font-size: 18px;
+}
+
+.clear-search:hover {
+  background: #f1f5f9;
 }
