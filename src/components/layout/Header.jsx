@@ -12,6 +12,11 @@ import {
   CreditCard,
   UserCheck,
   CheckCheck,
+  X,
+  Eye,
+  EyeOff,
+  KeyRound,
+  CheckCircle,
 } from "lucide-react";
 import { logout } from "../../redux/slices/authSlice";
 import "./Header.css";
@@ -23,6 +28,18 @@ const Header = () => {
 
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+
+  // Change Password Modal & Form States
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const [passwordData, setPasswordData] = useState({
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [passwordError, setPasswordError] = useState("");
 
   const profileRef = useRef(null);
   const notificationRef = useRef(null);
@@ -72,6 +89,51 @@ const Header = () => {
     );
   };
 
+  // Handle Change Password Form Input
+  const handlePasswordInputChange = (e) => {
+    setPasswordData({ ...passwordData, [e.target.name]: e.target.value });
+    setPasswordError("");
+  };
+
+  // Close & Reset Modal State
+  const closePasswordModal = () => {
+    setIsPasswordModalOpen(false);
+    setPasswordData({
+      oldPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    });
+    setPasswordError("");
+    setShowOldPassword(false);
+    setShowNewPassword(false);
+    setShowConfirmPassword(false);
+  };
+
+  // Submit Change Password
+  const handlePasswordSubmit = (e) => {
+    e.preventDefault();
+    if (
+      !passwordData.oldPassword ||
+      !passwordData.newPassword ||
+      !passwordData.confirmPassword
+    ) {
+      setPasswordError("All fields are required.");
+      return;
+    }
+    if (passwordData.newPassword.length < 6) {
+      setPasswordError("New password must be at least 6 characters.");
+      return;
+    }
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      setPasswordError("New password and confirm password do not match.");
+      return;
+    }
+
+    // Add API dispatch call here for changing password
+    alert("Password updated successfully!");
+    closePasswordModal();
+  };
+
   // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -90,167 +152,288 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="app-header">
-      <div className="header-search-wrapper">
-        <Search className="search-icon" size={18} />
-        <input
-          type="text"
-          placeholder="Search booking, room, guest, invoice..."
-          className="header-search-input"
-        />
-      </div>
+    <>
+      <header className="app-header">
+        <div className="header-search-wrapper">
+          <Search className="search-icon" size={18} />
+          <input
+            type="text"
+            placeholder="Search booking, room, guest, invoice..."
+            className="header-search-input"
+          />
+        </div>
 
-      {/* Right Section: Actions & User Profile */}
-      <div className="header-right-section">
-        {/* Notification Bell & Dropdown */}
-        <div className="notification-container" ref={notificationRef}>
-          <button
-            className={`notification-btn ${isNotificationsOpen ? "active" : ""}`}
-            aria-label="Notifications"
-            onClick={() => {
-              setIsNotificationsOpen((prev) => !prev);
-              setIsProfileOpen(false);
-            }}
-          >
-            <Bell size={20} className="bell-icon" />
-            {unreadCount > 0 && <span className="notification-badge"></span>}
-          </button>
+        {/* Right Section: Actions & User Profile */}
+        <div className="header-right-section">
+          {/* Notification Bell & Dropdown */}
+          <div className="notification-container" ref={notificationRef}>
+            <button
+              className={`notification-btn ${isNotificationsOpen ? "active" : ""}`}
+              aria-label="Notifications"
+              onClick={() => {
+                setIsNotificationsOpen((prev) => !prev);
+                setIsProfileOpen(false);
+              }}
+            >
+              <Bell size={20} className="bell-icon" />
+              {unreadCount > 0 && <span className="notification-badge"></span>}
+            </button>
 
-          {isNotificationsOpen && (
-            <div className="notification-dropdown-menu">
-              <div className="notification-header">
-                <div className="notification-title-group">
-                  <h3>Notifications</h3>
+            {isNotificationsOpen && (
+              <div className="notification-dropdown-menu">
+                <div className="notification-header">
+                  <div className="notification-title-group">
+                    <h3>Notifications</h3>
+                    {unreadCount > 0 && (
+                      <span className="unread-count-badge">
+                        {unreadCount} New
+                      </span>
+                    )}
+                  </div>
                   {unreadCount > 0 && (
-                    <span className="unread-count-badge">
-                      {unreadCount} New
-                    </span>
+                    <button className="mark-all-btn" onClick={markAllAsRead}>
+                      <CheckCheck size={14} />
+                      Mark all read
+                    </button>
                   )}
                 </div>
-                {unreadCount > 0 && (
-                  <button className="mark-all-btn" onClick={markAllAsRead}>
-                    <CheckCheck size={14} />
-                    Mark all read
-                  </button>
-                )}
-              </div>
 
-              <div className="notification-list">
-                {notifications.length > 0 ? (
-                  notifications.map((item) => (
-                    <div
-                      key={item.id}
-                      className={`notification-item ${item.read ? "read" : "unread"}`}
-                      onClick={() => markAsRead(item.id)}
-                    >
-                      <div className="notif-icon-wrapper">{item.icon}</div>
-                      <div className="notif-content">
-                        <span className="notif-title">{item.title}</span>
-                        <p className="notif-desc">{item.desc}</p>
-                        <span className="notif-time">{item.time}</span>
+                <div className="notification-list">
+                  {notifications.length > 0 ? (
+                    notifications.map((item) => (
+                      <div
+                        key={item.id}
+                        className={`notification-item ${
+                          item.read ? "read" : "unread"
+                        }`}
+                        onClick={() => markAsRead(item.id)}
+                      >
+                        <div className="notif-icon-wrapper">{item.icon}</div>
+                        <div className="notif-content">
+                          <span className="notif-title">{item.title}</span>
+                          <p className="notif-desc">{item.desc}</p>
+                          <span className="notif-time">{item.time}</span>
+                        </div>
+                        {!item.read && <span className="unread-dot"></span>}
                       </div>
-                      {!item.read && <span className="unread-dot"></span>}
+                    ))
+                  ) : (
+                    <div className="no-notifications">
+                      <p>No notifications available</p>
                     </div>
-                  ))
-                ) : (
-                  <div className="no-notifications">
-                    <p>No notifications available</p>
-                  </div>
-                )}
+                  )}
+                </div>
+
+                <div className="notification-footer">
+                  <button
+                    className="view-all-btn"
+                    onClick={() => {
+                      setIsNotificationsOpen(false);
+                      navigate("/notifications");
+                    }}
+                  >
+                    View All Notifications
+                  </button>
+                </div>
               </div>
-
-              <div className="notification-footer">
-                <button
-                  className="view-all-btn"
-                  onClick={() => {
-                    setIsNotificationsOpen(false);
-                    navigate("/notifications");
-                  }}
-                >
-                  View All Notifications
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Vertical Divider */}
-        <div className="header-divider"></div>
-
-        {/* User Profile Dropdown */}
-        <div className="user-profile-container" ref={profileRef}>
-          <div
-            className="user-profile"
-            onClick={() => {
-              setIsProfileOpen((prev) => !prev);
-              setIsNotificationsOpen(false);
-            }}
-          >
-            <div className="user-info">
-              <span className="user-name">{user?.name || "Admin User"}</span>
-              <span className="user-role">
-                {user?.role || "System Manager"}
-              </span>
-            </div>
-
-            <div className="avatar-wrapper">
-              <img
-                src={
-                  user?.avatar ||
-                  "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=120"
-                }
-                alt="User Avatar"
-                className="user-avatar"
-              />
-            </div>
-            <ChevronDown
-              size={16}
-              className={`dropdown-arrow ${isProfileOpen ? "open" : ""}`}
-            />
+            )}
           </div>
 
-          {/* Profile Dropdown Menu */}
-          {isProfileOpen && (
-            <div className="profile-dropdown-menu">
-              <button
-                className="dropdown-item"
-                onClick={() => {
-                  setIsProfileOpen(false);
-                  navigate("/profile");
-                }}
-              >
-                <User size={16} />
-                <span>My Profile</span>
-              </button>
+          {/* Vertical Divider */}
+          <div className="header-divider"></div>
 
-              <button
-                className="dropdown-item"
-                onClick={() => {
-                  setIsProfileOpen(false);
-                  navigate("/change-password");
-                }}
-              >
-                <Lock size={16} />
-                <span>Change Password</span>
-              </button>
+          {/* User Profile Dropdown */}
+          <div className="user-profile-container" ref={profileRef}>
+            <div
+              className="user-profile"
+              onClick={() => {
+                setIsProfileOpen((prev) => !prev);
+                setIsNotificationsOpen(false);
+              }}
+            >
+              <div className="user-info">
+                <span className="user-name">{user?.name || "Admin User"}</span>
+                <span className="user-role">
+                  {user?.role || "System Manager"}
+                </span>
+              </div>
 
-              <div className="dropdown-divider"></div>
+              <div className="avatar-wrapper">
+                <img
+                  src={
+                    user?.avatar ||
+                    "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=120"
+                  }
+                  alt="User Avatar"
+                  className="user-avatar"
+                />
+              </div>
+              <ChevronDown
+                size={16}
+                className={`dropdown-arrow ${isProfileOpen ? "open" : ""}`}
+              />
+            </div>
 
+            {/* Profile Dropdown Menu */}
+            {isProfileOpen && (
+              <div className="profile-dropdown-menu">
+                <button
+                  className="dropdown-item"
+                  onClick={() => {
+                    setIsProfileOpen(false);
+                    navigate("/profile");
+                  }}
+                >
+                  <User size={16} />
+                  <span>My Profile</span>
+                </button>
+
+                <button
+                  className="dropdown-item"
+                  onClick={() => {
+                    setIsProfileOpen(false);
+                    setIsPasswordModalOpen(true);
+                  }}
+                >
+                  <Lock size={16} />
+                  <span>Change Password</span>
+                </button>
+
+                <div className="dropdown-divider"></div>
+
+                <button
+                  className="dropdown-item logout-item"
+                  onClick={() => {
+                    setIsProfileOpen(false);
+                    handleLogout();
+                  }}
+                >
+                  <LogOut size={16} />
+                  <span>Logout</span>
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </header>
+
+      {/* Blurred Backdrop & Change Password Modal */}
+      {isPasswordModalOpen && (
+        <div className="pwd-modal-overlay">
+          <div className="pwd-modal-container">
+            <div className="pwd-modal-header">
+              <div className="pwd-title-group">
+                <div className="pwd-icon-badge">
+                  <KeyRound size={20} />
+                </div>
+                <div>
+                  <h3>Change Password</h3>
+                  <p>Update your account security password</p>
+                </div>
+              </div>
               <button
-                className="dropdown-item logout-item"
-                onClick={() => {
-                  setIsProfileOpen(false);
-                  handleLogout();
-                }}
+                className="pwd-close-btn"
+                onClick={closePasswordModal}
+                aria-label="Close modal"
               >
-                <LogOut size={16} />
-                <span>Logout</span>
+                <X size={18} />
               </button>
             </div>
-          )}
+
+            <form onSubmit={handlePasswordSubmit} className="pwd-modal-form">
+              {passwordError && (
+                <div className="pwd-error-alert">{passwordError}</div>
+              )}
+
+              {/* Old Password */}
+              <div className="pwd-form-group">
+                <label>Old Password</label>
+                <div className="pwd-input-wrapper">
+                  <Lock size={16} className="pwd-input-icon" />
+                  <input
+                    type={showOldPassword ? "text" : "password"}
+                    name="oldPassword"
+                    placeholder="Enter current password"
+                    value={passwordData.oldPassword}
+                    onChange={handlePasswordInputChange}
+                  />
+                  <button
+                    type="button"
+                    className="pwd-toggle-btn"
+                    onClick={() => setShowOldPassword(!showOldPassword)}
+                  >
+                    {showOldPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
+                </div>
+              </div>
+
+              {/* New Password */}
+              <div className="pwd-form-group">
+                <label>New Password</label>
+                <div className="pwd-input-wrapper">
+                  <Lock size={16} className="pwd-input-icon" />
+                  <input
+                    type={showNewPassword ? "text" : "password"}
+                    name="newPassword"
+                    placeholder="Enter new password"
+                    value={passwordData.newPassword}
+                    onChange={handlePasswordInputChange}
+                  />
+                  <button
+                    type="button"
+                    className="pwd-toggle-btn"
+                    onClick={() => setShowNewPassword(!showNewPassword)}
+                  >
+                    {showNewPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
+                </div>
+              </div>
+
+              {/* Confirm Password */}
+              <div className="pwd-form-group">
+                <label>Confirm New Password</label>
+                <div className="pwd-input-wrapper">
+                  <Lock size={16} className="pwd-input-icon" />
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    name="confirmPassword"
+                    placeholder="Confirm new password"
+                    value={passwordData.confirmPassword}
+                    onChange={handlePasswordInputChange}
+                  />
+                  <button
+                    type="button"
+                    className="pwd-toggle-btn"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  >
+                    {showConfirmPassword ? (
+                      <EyeOff size={16} />
+                    ) : (
+                      <Eye size={16} />
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Modal Actions */}
+              <div className="pwd-modal-actions">
+                <button
+                  type="button"
+                  className="pwd-btn-cancel"
+                  onClick={closePasswordModal}
+                >
+                  Cancel
+                </button>
+                <button type="submit" className="pwd-btn-submit">
+                  <CheckCircle size={16} />
+                  Update Password
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
-    </header>
+      )}
+    </>
   );
 };
 
