@@ -18,6 +18,7 @@ import MainLayout from "../components/layout/MainLayout";
 import RoomList from "../pages/rooms/RoomList";
 import GuestList from "../pages/guests/GuestList";
 import BookingList from "../pages/bookings/BookingList";
+import PaymentList from "../pages/payments/PaymentList";
 
 const AppRoutes = () => {
   return (
@@ -53,6 +54,7 @@ const AppRoutes = () => {
             <Route path="/rooms" element={<RoomList />} />
             <Route path="/guests" element={<GuestList />} />
             <Route path="/bookings" element={<BookingList />} />
+            <Route path="/payments" element={<PaymentList />} />
           </Route>
 
         </Route>
