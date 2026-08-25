@@ -16,6 +16,7 @@ const Sidebar = () => {
     { path: "/billing", label: "Billing", iconName: "Receipt" },
     { path: "/guests", label: "Guests", iconName: "Users" },
     { path: "/payments", label: "Payments", iconName: "Wallet" },
+    { path: "/invoices", label: "Invoices", iconName: "Receipt" },
     { path: "/housekeeping", label: "Housekeeping", iconName: "Sparkles" },
     { path: "/reports", label: "Reports", iconName: "BarChart3" },
   ];

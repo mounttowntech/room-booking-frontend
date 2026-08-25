@@ -19,6 +19,7 @@ import RoomList from "../pages/rooms/RoomList";
 import GuestList from "../pages/guests/GuestList";
 import BookingList from "../pages/bookings/BookingList";
 import PaymentList from "../pages/payments/PaymentList";
+import InvoiceList from "../pages/invoices/InvoiceList";
 
 const AppRoutes = () => {
   return (
@@ -55,6 +56,7 @@ const AppRoutes = () => {
             <Route path="/guests" element={<GuestList />} />
             <Route path="/bookings" element={<BookingList />} />
             <Route path="/payments" element={<PaymentList />} />
+            <Route path="/invoices" element={<InvoiceList />} />
           </Route>
 
         </Route>
