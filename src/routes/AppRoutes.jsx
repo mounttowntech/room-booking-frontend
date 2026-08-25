@@ -15,6 +15,7 @@ import GuestList from "../pages/guests/GuestList";
 import BookingList from "../pages/bookings/BookingList";
 import PaymentList from "../pages/payments/PaymentList";
 import Profile from "../pages/profile/Profile";
+import InvoiceList from "../pages/invoices/InvoiceList";
 
 const AppRoutes = () => {
   return (
@@ -40,6 +41,7 @@ const AppRoutes = () => {
             <Route path="/bookings" element={<BookingList />} />
             <Route path="/payments" element={<PaymentList />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/invoices" element={<InvoiceList />} />
           </Route>
         </Route>
 
