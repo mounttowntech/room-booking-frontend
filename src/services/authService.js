@@ -40,6 +40,18 @@ const authService = {
   },
 
   // ============================================================
+  // get housekeeping staff
+  // ============================================================
+
+  getHousekeepingStaff: async () => {
+    const response = await apiClient.get(
+      "/users/housekeeping-staff"
+    );
+
+    return response.data;
+  },
+
+  // ============================================================
   // LOGOUT
   // ============================================================
 

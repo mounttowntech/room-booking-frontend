@@ -66,6 +66,27 @@ export const getProfile = createAsyncThunk(
 );
 
 // ============================================================
+// get housekeeping staff
+// ============================================================
+
+export const getHousekeepingStaff = createAsyncThunk(
+  "housekeeping/getHousekeepingStaff",
+
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await authService.getHousekeepingStaff();
+
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message ||
+          "Failed to fetch housekeeping staff."
+      );
+    }
+  }
+);
+
+// ============================================================
 // INITIAL STATE
 // ============================================================
 
@@ -235,6 +256,25 @@ builder
       .addCase(getProfile.rejected, (state) => {
         state.loading = false;
       });
+
+    // --------------------------------------------------------
+    // housekeeping staff
+    // --------------------------------------------------------
+    builder.addCase(getHousekeepingStaff.pending, (state) => {
+      state.loading = true;
+    })
+
+    .addCase(getHousekeepingStaff.fulfilled, (state, action) => {
+      state.loading = false;
+      state.housekeepingStaff = action.payload;
+    })
+
+    .addCase(getHousekeepingStaff.rejected, (state, action) => {
+      state.loading = false;
+      state.error =
+        action.payload ||
+        "Failed to fetch housekeeping staff.";
+    });
   },
 });
 
