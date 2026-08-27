@@ -1,0 +1,307 @@
+.reports-page {
+  padding: 24px;
+  background: #f8fafc;
+  min-height: 100vh;
+}
+
+/* ============================================================
+   HEADER
+============================================================ */
+
+.reports-header {
+  margin-bottom: 24px;
+}
+
+.reports-header h1 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.reports-header p {
+  margin: 6px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* ============================================================
+   TABS
+============================================================ */
+
+.report-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.report-tab {
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.report-tab:hover {
+  background: #f3f4f6;
+}
+
+.report-tab.active {
+  background: #111827;
+  color: #ffffff;
+  border-color: #111827;
+}
+
+/* ============================================================
+   FILTER
+============================================================ */
+
+.report-filter {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  background: #ffffff;
+  padding: 18px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.filter-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.filter-field input {
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  outline: none;
+}
+
+.filter-field input:focus {
+  border-color: #111827;
+}
+
+.generate-btn {
+  height: 40px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 7px;
+  background: #111827;
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.generate-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ============================================================
+   SUMMARY
+============================================================ */
+
+.report-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.summary-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 18px;
+}
+
+.summary-card span {
+  display: block;
+  color: #6b7280;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.summary-card strong {
+  font-size: 23px;
+  color: #111827;
+}
+
+/* ============================================================
+   CONTENT
+============================================================ */
+
+.report-content {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.report-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.report-table th {
+  background: #f9fafb;
+  padding: 14px 16px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6b7280;
+  border-bottom: 1px solid #e5e7eb;
+  white-space: nowrap;
+}
+
+.report-table td {
+  padding: 14px 16px;
+  font-size: 13px;
+  color: #374151;
+  border-bottom: 1px solid #f1f5f9;
+  white-space: nowrap;
+}
+
+.report-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+/* ============================================================
+   STATUS
+============================================================ */
+
+.status-badge {
+  display: inline-flex;
+  padding: 5px 9px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: capitalize;
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.status-badge.confirmed {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-badge.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-badge.checked_in {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.status-badge.checked_out {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.status-badge.cancelled {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* ============================================================
+   STATES
+============================================================ */
+
+.no-data {
+  text-align: center !important;
+  padding: 40px !important;
+  color: #9ca3af !important;
+}
+
+.report-loading {
+  padding: 50px;
+  text-align: center;
+  color: #6b7280;
+}
+
+.report-error {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.report-section-header {
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.report-section-header h2 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.report-section-header p {
+  margin: 5px 0 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+
+@media (max-width: 900px) {
+  .report-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .report-filter {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 600px) {
+  .reports-page {
+    padding: 16px;
+  }
+
+  .report-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .report-filter {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-field input,
+  .generate-btn {
+    width: 100%;
+  }
+
+  .report-tabs {
+    overflow-x: auto;
+  }
+}

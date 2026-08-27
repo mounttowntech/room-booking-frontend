@@ -116,14 +116,24 @@ console.log("Login form submitted:", data);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    try {
     const result = await dispatch(loginUser(formData));
 
     if (loginUser.fulfilled.match(result)) {
       navigate("/dashboard", {
         replace: true,
       });
+      return;
     }
-  };
+    if (loginUser.rejected.match(result)) {
+      toast.error(result.payload || "Login failed. Please try again.");
+      return;
+    }
+  } catch (error) {
+    console.error("Login error:", error);
+    toast.error("An unexpected error occurred. Please try again.");
+  }
+}
 
   return (
     <div className="login-page" style={{ backgroundImage: `url(${bgImage})` }}>

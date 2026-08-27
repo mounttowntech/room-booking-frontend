@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Camera,
   User,
@@ -12,8 +12,12 @@ import {
   FileImage,
 } from "lucide-react";
 import "./Profile.css";
+import profileImageAvatar from "../../assets/images/profile-image-avatar.jpg";
+import { getProfile } from "../../redux/slices/authSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Profile = () => {
+  const dispatch = useDispatch();
   const [profile, setProfile] = useState({
     fullName: "Manoj Kumar",
     username: "manojkumarbr",
@@ -23,10 +27,17 @@ const Profile = () => {
     department: "Hotel Operations",
   });
 
-  const [avatarSrc, setAvatarSrc] = useState("https://via.placeholder.com/100");
+  const [avatarSrc, setAvatarSrc] = useState(profileImageAvatar);
   const [fileDetails, setFileDetails] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const fileInputRef = useRef(null);
+  const { user } = useSelector((state) => state.auth);
+  // console.log("Redux State in Profile.jsx:", user);
+
+  useEffect(() => {
+    // Fetch profile data from Redux store or API
+    dispatch(getProfile());
+  }, [dispatch]);
 
   const handleAvatarClick = () => {
     fileInputRef.current.click();
@@ -84,9 +95,9 @@ const Profile = () => {
             </button>
           </div>
           <div className="profile-title">
-            <h2>{profile.fullName}</h2>
+            <h2>{user?.name}</h2>
             <span className="role-badge">
-              <Shield size={12} /> {profile.role}
+              <Shield size={12} /> {user?.role}
             </span>
 
             {/* Display Uploaded File Info */}
@@ -122,7 +133,7 @@ const Profile = () => {
                 <input
                   type="text"
                   name="fullName"
-                  value={profile.fullName}
+                  value={user?.name || profile.fullName}
                   onChange={handleChange}
                   disabled={!isEditing}
                 />
@@ -136,7 +147,7 @@ const Profile = () => {
                 <input
                   type="text"
                   name="username"
-                  value={profile.username}
+                  value={user?.username || user.email.split("@")[0] || profile.username}
                   onChange={handleChange}
                   disabled={!isEditing}
                 />
@@ -150,7 +161,7 @@ const Profile = () => {
                 <input
                   type="email"
                   name="email"
-                  value={profile.email}
+                  value={user?.email || profile.email}
                   onChange={handleChange}
                   disabled={!isEditing}
                 />
@@ -164,7 +175,7 @@ const Profile = () => {
                 <input
                   type="text"
                   name="phone"
-                  value={profile.phone}
+                  value={user?.phone || user.mobileNumber}
                   onChange={handleChange}
                   disabled={!isEditing}
                 />
@@ -178,7 +189,7 @@ const Profile = () => {
                 <input
                   type="text"
                   name="role"
-                  value={profile.role}
+                  value={user?.role || profile.role}
                   disabled
                   className="input-disabled"
                 />
@@ -192,7 +203,7 @@ const Profile = () => {
                 <input
                   type="text"
                   name="department"
-                  value={profile.department}
+                  value={user?.department || user.role}
                   onChange={handleChange}
                   disabled={!isEditing}
                 />

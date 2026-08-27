@@ -86,6 +86,9 @@ console.log("Error:", error);
     setOpenActionId,
   ] = useState(null);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+
   // ==========================================================
   // FETCH INVOICES
   // ==========================================================
@@ -205,6 +208,33 @@ console.log("Error:", error);
     query,
     status,
   ]);
+
+  // ============================================================
+  // PAGINATION
+  // ============================================================
+
+  const totalItems = filteredInvoices.length;
+
+  const totalPages = Math.ceil(
+    totalItems / itemsPerPage
+  );
+
+  const startIndex =
+    (currentPage - 1) * itemsPerPage;
+
+  const endIndex =
+    startIndex + itemsPerPage;
+
+  const paginatedInvoices =
+    filteredInvoices.slice(
+      startIndex,
+      endIndex
+    );
+
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [query, status, itemsPerPage]);
 
   // ==========================================================
   // VIEW INVOICE
@@ -627,10 +657,10 @@ console.log("Error:", error);
                   </td>
                 </tr>
 
-              ) : filteredInvoices.length >
+              ) : paginatedInvoices.length >
                 0 ? (
 
-                filteredInvoices.map(
+                paginatedInvoices.map(
                   (invoice) => {
 
                     const bookingNo =
@@ -914,7 +944,7 @@ console.log("Error:", error);
 
         {/* FOOTER */}
 
-        {!loading &&
+        {/* {!loading &&
           invoices.length > 0 && (
 
             <div className="invoice-list-footer">
@@ -932,7 +962,154 @@ console.log("Error:", error);
               invoices
 
             </div>
-          )}
+          )} */}
+              {!loading && paginatedInvoices.length > 0 && (
+
+  <div className="room-list-footer">
+
+    {/* SHOWING INFO */}
+
+    <div className="pagination-info">
+
+      Showing{" "}
+
+      <strong>
+        {startIndex + 1}
+      </strong>
+
+      {" - "}
+
+      <strong>
+        {Math.min(
+          endIndex,
+          totalItems
+        )}
+      </strong>
+
+      {" of "}
+
+      <strong>
+        {totalItems}
+      </strong>
+
+      {" rooms"}
+
+    </div>
+
+
+    {/* ITEMS PER PAGE */}
+
+    <div className="pagination-size">
+
+      <span>
+        Rows:
+      </span>
+
+      <select
+        value={itemsPerPage}
+        onChange={(event) => {
+          setItemsPerPage(
+            Number(event.target.value)
+          );
+
+          setCurrentPage(1);
+        }}
+      >
+
+        <option value={5}>
+          5
+        </option>
+
+        <option value={10}>
+          10
+        </option>
+
+        <option value={20}>
+          20
+        </option>
+
+        <option value={50}>
+          50
+        </option>
+
+      </select>
+
+    </div>
+
+
+    {/* PAGINATION */}
+
+    {totalPages > 1 && (
+
+      <div className="pagination-controls">
+
+        {/* PREVIOUS */}
+
+        <button
+          type="button"
+          className="pagination-button"
+          disabled={currentPage === 1}
+          onClick={() =>
+            setCurrentPage(
+              (page) => page - 1
+            )
+          }
+          aria-label="Previous page"
+        >
+          ‹
+        </button>
+
+
+        {/* PAGE NUMBERS */}
+
+        {Array.from(
+          { length: totalPages },
+          (_, index) => index + 1
+        ).map((page) => (
+
+          <button
+            type="button"
+            key={page}
+            className={
+              currentPage === page
+                ? "pagination-button active"
+                : "pagination-button"
+            }
+            onClick={() =>
+              setCurrentPage(page)
+            }
+          >
+            {page}
+          </button>
+
+        ))}
+
+
+        {/* NEXT */}
+
+        <button
+          type="button"
+          className="pagination-button"
+          disabled={
+            currentPage === totalPages
+          }
+          onClick={() =>
+            setCurrentPage(
+              (page) => page + 1
+            )
+          }
+          aria-label="Next page"
+        >
+          ›
+        </button>
+
+      </div>
+
+    )}
+
+  </div>
+
+)}
 
       </section>
 

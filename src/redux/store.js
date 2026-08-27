@@ -6,6 +6,9 @@ import guestReducer from "./slices/guestSlice";
 import bookingReducer from "./slices/bookingSlice";
 import paymentReducer from "./slices/paymentSlice";
 import invoiceReducer from "./slices/invoiceSlice";
+import housekeepingReducer from "./slices/housekeepingSlice";
+import dashboardReducer from "./slices/dashboardSlice";
+import reportReducer from "./slices/reportSlice";
 
 const store = configureStore({
   reducer: {
@@ -15,6 +18,9 @@ const store = configureStore({
     booking: bookingReducer,
     payment: paymentReducer,
     invoice: invoiceReducer,
+    housekeeping: housekeepingReducer,
+    dashboard: dashboardReducer,
+    reports: reportReducer,
   },
 });
 

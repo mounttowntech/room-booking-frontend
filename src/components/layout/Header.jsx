@@ -18,8 +18,10 @@ import {
   KeyRound,
   CheckCircle,
 } from "lucide-react";
-import { logout } from "../../redux/slices/authSlice";
+import { logout, changePassword } from "../../redux/slices/authSlice";
 import "./Header.css";
+import profileImageAvatar from "../../assets/images/profile-image-avatar.jpg";
+import toast from "react-hot-toast";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -130,7 +132,16 @@ const Header = () => {
     }
 
     // Add API dispatch call here for changing password
-    alert("Password updated successfully!");
+    const result = dispatch(changePassword(passwordData));
+    console.log("Change Password Result:", result);
+    if (changePassword.fulfilled.match(result)) {
+        toast.success("Password changed successfully!");
+    }
+
+    if (changePassword.rejected.match(result)) {
+        toast.error(result.payload || "Password change failed. Please try again.");
+    }
+
     closePasswordModal();
   };
 
@@ -262,7 +273,7 @@ const Header = () => {
                 <img
                   src={
                     user?.avatar ||
-                    "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=120"
+                    profileImageAvatar
                   }
                   alt="User Avatar"
                   className="user-avatar"

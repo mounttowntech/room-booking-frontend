@@ -1,12 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Dashboard.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Bed, IndianRupee, Calendar, Clock, Plus } from "lucide-react";
+import { getDashboardData } from "../../redux/slices/dashboardSlice";
 
 const Dashboard = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { data } = useSelector((state) => state?.dashboard?.dashboardData || {});
+  // const statedata = useSelector((state) => state);
+  console.log("Dashboard state:", data);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [summary, setSummary] = useState(null);
+  const [recentBookings, setRecentBookings] = useState([]);
+  const [occupancyData, setOccupancyData] = useState([]);
+
+  React.useEffect(() => {
+    dispatch(getDashboardData());
+  }, [dispatch]);
+
+  React.useEffect(() => {
+    if (data) {
+      setSummary(data?.summary || null);
+      setRecentBookings(data?.recentBookings || []);
+      setOccupancyData(data?.occupancy || []);
+    }
+  }, [data]);
 
   const statsData = {
     totalRooms: 6,
@@ -16,41 +35,42 @@ const Dashboard = () => {
     pendingDue: 12680,
   };
 
-  const recentBookings = [
-    {
-      id: "BK-0001",
-      guest: "Arun Kumar",
-      room: "102",
-      status: "Checked In",
-      statusClass: "checked-in",
-      amount: "₹5000",
-    },
-    {
-      id: "BK-0002",
-      guest: "Priya Sharma",
-      room: "201",
-      status: "Reserved",
-      statusClass: "reserved",
-      amount: "₹9000",
-    },
-    {
-      id: "BK-0003",
-      guest: "Nisha Rao",
-      room: "301",
-      status: "Pending",
-      statusClass: "pending",
-      amount: "₹1800",
-    },
-  ];
+  // const recentBookings = [
+  //   {
+  //     id: "BK-0001",
+  //     guest: "Arun Kumar",
+  //     room: "102",
+  //     status: "Checked In",
+  //     statusClass: "checked-in",
+  //     amount: "₹5000",
+  //   },
+  //   {
+  //     id: "BK-0002",
+  //     guest: "Priya Sharma",
+  //     room: "201",
+  //     status: "Reserved",
+  //     statusClass: "reserved",
+  //     amount: "₹9000",
+  //   },
+  //   {
+  //     id: "BK-0003",
+  //     guest: "Nisha Rao",
+  //     room: "301",
+  //     status: "Pending",
+  //     statusClass: "pending",
+  //     amount: "₹1800",
+  //   },
+  // ];
 
-  const chartData = [
-    { room: "101", height: "55%" },
-    { room: "102", height: "35%" },
-    { room: "201", height: "80%" },
-    { room: "202", height: "45%" },
-    { room: "301", height: "30%" },
-  ];
+  // const chartData = [
+  //   { room: "101", height: "55%" },
+  //   { room: "102", height: "35%" },
+  //   { room: "201", height: "80%" },
+  //   { room: "202", height: "45%" },
+  //   { room: "301", height: "30%" },
+  // ];
 
+  console.log("occupancyData:", occupancyData);
   return (
     <div className="dashboard-page">
       <div className="dashboard-banner">
@@ -71,12 +91,12 @@ const Dashboard = () => {
       </div>
 
       <div className="dashboard-stats">
-        <div className="stat-card">
+        <div className="stat-card" onClick={() => navigate("/rooms")}>
           <div className="stat-content">
             <span className="stat-title">Total Rooms</span>
-            <h2 className="stat-value">{statsData.totalRooms}</h2>
+            <h2 className="stat-value">{summary?.totalRooms || 0}</h2>
             <span className="stat-description">
-              {statsData.availableRooms} available now
+              {summary?.availableRooms || 0} available now
             </span>
           </div>
           <div className="stat-icon-wrapper">
@@ -84,11 +104,11 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="stat-card">
+        <div className="stat-card" onClick={() => navigate("/reports")}>
           <div className="stat-content">
             <span className="stat-title">Today Revenue</span>
             <h2 className="stat-value highlight">
-              ₹{statsData.todayRevenue.toLocaleString()}
+              ₹{summary?.todayRevenue?.toLocaleString() || 0}
             </h2>
             <span className="stat-description">Collected amount</span>
           </div>
@@ -97,10 +117,10 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="stat-card">
+        <div className="stat-card" onClick={() => navigate("/bookings")}>
           <div className="stat-content">
             <span className="stat-title">Active Bookings</span>
-            <h2 className="stat-value highlight">{statsData.activeBookings}</h2>
+            <h2 className="stat-value highlight">{summary?.activeBookings || 0}</h2>
             <span className="stat-description">Reserved + checked-in</span>
           </div>
           <div className="stat-icon-wrapper">
@@ -108,11 +128,11 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="stat-card">
+        <div className="stat-card" onClick={() => navigate("/payments")}>
           <div className="stat-content">
             <span className="stat-title">Pending Due</span>
             <h2 className="stat-value highlight">
-              ₹{statsData.pendingDue.toLocaleString()}
+              ₹{summary?.pendingDue?.toLocaleString() || 0}
             </h2>
             <span className="stat-description">Need collection</span>
           </div>
@@ -140,17 +160,26 @@ const Dashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {recentBookings.map((item) => (
-                  <tr key={item.id}>
-                    <td className="booking-id">{item.id}</td>
-                    <td className="guest-name">{item.guest}</td>
-                    <td>{item.room}</td>
+                {/* no data found */}
+                {recentBookings.length === 0 && (
+                  <tr>
+                    <td colSpan="5" className="no-data">
+                      No recent bookings found.
+                    </td>
+                  </tr>
+                )}
+                {/* show only 5 recent bookings */}
+                {recentBookings.slice(0, 5).map((item, index) => (
+                  <tr key={item.id || index}>
+                    <td className="booking-id">{item.bookingNo}</td>
+                    <td className="guest-name">{item.guestId?.name}</td>
+                    <td>{item.roomId?.roomNumber}</td>
                     <td>
                       <span className={`status-badge ${item.statusClass}`}>
-                        {item.status}
+                        {item.bookingStatus}
                       </span>
                     </td>
-                    <td className="booking-amount">{item.amount}</td>
+                    <td className="booking-amount">$ {item.totalAmount?.toLocaleString()}</td>
                   </tr>
                 ))}
               </tbody>
@@ -182,12 +211,12 @@ const Dashboard = () => {
             </div>
 
             <div className="chart-bars-wrapper">
-              {chartData.map((item, index) => (
-                <div className="bar-column" key={index}>
+              {occupancyData && occupancyData.map((item, index) => (
+                <div className="bar-column" key={item.id || index}>
                   <div className="bar-track">
                     <div
                       className="bar-fill"
-                      style={{ height: item.height }}
+                      style={{ height: `${item.occupancy || '0'}%` }}
                     ></div>
                   </div>
                   <span className="bar-label">{item.room}</span>
