@@ -87,6 +87,27 @@ export const deleteTask = createAsyncThunk(
   }
 );
 
+//============================================================
+// assign housekeeping task
+//============================================================
+
+export const assignHousekeepingTask = createAsyncThunk(
+  "housekeeping/assignHousekeepingTask",
+
+  async ({ id, staffId, notes }, { rejectWithValue }) => {
+    try {
+      const response = await houseKeepingService.assignTaskToStaff(id, staffId, notes);
+
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message ||
+          "Failed to assign housekeeping task."
+      );
+    }
+  }
+);
+
 
 
 // ============================================================
@@ -212,6 +233,21 @@ builder
     .addCase(deleteTask.fulfilled, (state, action) => {
       state.loading = false;
       state.tasks = state.tasks.filter((task) => task.id !== action.payload.id);
+    });
+
+    // --------------------------------------------------------
+    // assignHousekeepingTask
+    // -------------------------------------------------------- 
+    builder.addCase(assignHousekeepingTask.pending, (state) => {
+      state.loading = true;
+    })
+
+    .addCase(assignHousekeepingTask.fulfilled, (state, action) => {
+      state.loading = false;
+      state.tasks =  action.payload;
+    })
+    .addCase(assignHousekeepingTask.rejected, (state) => {
+      state.loading = false;
     });
   },
 });

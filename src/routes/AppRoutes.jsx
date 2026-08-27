@@ -17,6 +17,7 @@ import PaymentList from "../pages/payments/PaymentList";
 import Profile from "../pages/profile/Profile";
 import InvoiceList from "../pages/invoices/InvoiceList";
 import HousekeepingList from "../pages/housekeeping/HousekeepingList";
+import Reports from "../pages/reports/Reports";
 
 const AppRoutes = () => {
   return (
@@ -44,6 +45,7 @@ const AppRoutes = () => {
             <Route path="/profile" element={<Profile />} />
             <Route path="/invoices" element={<InvoiceList />} />
             <Route path="/housekeeping" element={<HousekeepingList />} />
+            <Route path="/reports" element={<Reports />} />
           </Route>
         </Route>
 

@@ -72,6 +72,10 @@ const HousekeepingList = () => {
       }
   );
 
+    const state = useSelector((state) => state);
+
+//   console.log("Housekeeping_state:", state);
+//  console.log("Housekeeping_tasks:", tasks);
   // ==========================================================
   // LOCAL STATE
   // ==========================================================
@@ -98,6 +102,9 @@ const HousekeepingList = () => {
 
 
 const [showAssignModal, setShowAssignModal] = useState(false);
+
+const [currentPage, setCurrentPage] = useState(1);
+const [itemsPerPage, setItemsPerPage] = useState(5);
 
   // ==========================================================
   // FETCH
@@ -132,27 +139,27 @@ const [showAssignModal, setShowAssignModal] = useState(false);
   const statusCounts = useMemo(() => {
 
     return {
-      pending: tasks.filter(
+      pending: tasks?.filter(
         (task) =>
           task.status === "pending"
       ).length,
 
-      assigned: tasks.filter(
+      assigned: tasks?.filter(
         (task) =>
           task.status === "assigned"
       ).length,
 
-      cleaning: tasks.filter(
+      cleaning: tasks?.filter(
         (task) =>
           task.status === "cleaning"
       ).length,
 
-      completed: tasks.filter(
+      completed: tasks?.filter(
         (task) =>
           task.status === "completed"
       ).length,
 
-      cancelled: tasks.filter(
+      cancelled: tasks?.filter(
         (task) =>
           task.status === "cancelled"
       ).length,
@@ -169,7 +176,7 @@ const [showAssignModal, setShowAssignModal] = useState(false);
     const search =
       query.trim().toLowerCase();
 
-    return tasks.filter((task) => {
+    return tasks?.filter((task) => {
 
       const roomNumber =
         task.roomId?.roomNumber ||
@@ -216,6 +223,33 @@ const [showAssignModal, setShowAssignModal] = useState(false);
     status,
   ]);
 
+  // ============================================================
+  // PAGINATION
+  // ============================================================
+
+  const totalItems = filteredTasks.length;
+
+  const totalPages = Math.ceil(
+    totalItems / itemsPerPage
+  );
+
+  const startIndex =
+    (currentPage - 1) * itemsPerPage;
+
+  const endIndex =
+    startIndex + itemsPerPage;
+
+  const paginatedTasks =
+    filteredTasks.slice(
+      startIndex,
+      endIndex
+    );
+
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [query, status, itemsPerPage]);
+
   // ==========================================================
   // VIEW TASK
   // ==========================================================
@@ -255,28 +289,41 @@ const [showAssignModal, setShowAssignModal] = useState(false);
         await dispatch(
           updateHousekeepingStatus({
             id: task._id,
-            status: newStatus,
+            taskData: newStatus,
           })
         ).unwrap();
-
+if (updateHousekeepingStatus.fulfilled.match(result)) {
       toast.success(
         `Housekeeping status updated to ${statusLabels[newStatus]}.`
       );
+    }
+
+    if (updateHousekeepingStatus.rejected.match(result)) {
+      toast.error(
+        result?.payload?.message ||
+          "Failed to update housekeeping status."
+      );
+    }
 
       setOpenActionId(null);
-
-      if (selectedTask?._id === task._id) {
-
-        setSelectedTask(
-          result?.data?.task ||
-          result?.task ||
-          result?.data ||
-          {
-            ...task,
-            status: newStatus,
-          }
+console.log(
+          "Updating selected_task_id:",selectedTask?._id, task._id
         );
-      }
+
+        console.log(
+          "Updating selected task status in modal...",selectedTask?._id, task._id
+        );
+fetchTasks();
+        // setSelectedTask(
+        //   result?.data?.task ||
+        //   result?.task ||
+        //   result?.data ||
+        //   {
+        //     ...task,
+        //     status: newStatus,
+        //   }
+        // );
+      
 
     } catch (error) {
 
@@ -535,9 +582,9 @@ const [showAssignModal, setShowAssignModal] = useState(false);
 
                 </tr>
 
-              ) : filteredTasks.length > 0 ? (
+              ) : paginatedTasks.length > 0 ? (
 
-                filteredTasks.map(
+                paginatedTasks.map(
                   (task) => {
 
                     const roomNumber =
@@ -683,7 +730,7 @@ const [showAssignModal, setShowAssignModal] = useState(false);
                               <div className="action-menu">
 
                                 {task.status !==
-                                  "assigned" && (
+                                  "completed" && (
 
                                   <button
                                     type="button"
@@ -699,7 +746,7 @@ const [showAssignModal, setShowAssignModal] = useState(false);
                                 )}
 
                                 {task.status !==
-                                  "cleaning" && (
+                                  "completed" && (
 
                                   <button
                                     type="button"
@@ -733,7 +780,7 @@ const [showAssignModal, setShowAssignModal] = useState(false);
                                 )}
 
                                 {task.status !==
-                                  "cancelled" && (
+                                  "completed" && (
 
                                   <button
                                     type="button"
@@ -804,7 +851,7 @@ const [showAssignModal, setShowAssignModal] = useState(false);
 
         {/* FOOTER */}
 
-        {!loading &&
+        {/* {!loading &&
           tasks.length > 0 && (
 
             <div className="housekeeping-footer">
@@ -821,7 +868,155 @@ const [showAssignModal, setShowAssignModal] = useState(false);
 
             </div>
 
-          )}
+          )} */}
+
+        {!loading && paginatedTasks.length > 0 && (
+
+          <div className="room-list-footer">
+
+            {/* SHOWING INFO */}
+
+            <div className="pagination-info">
+
+              Showing{" "}
+
+              <strong>
+                {startIndex + 1}
+              </strong>
+
+              {" - "}
+
+              <strong>
+                {Math.min(
+                  endIndex,
+                  totalItems
+                )}
+              </strong>
+
+              {" of "}
+
+              <strong>
+                {totalItems}
+              </strong>
+
+              {" rooms"}
+
+            </div>
+
+
+            {/* ITEMS PER PAGE */}
+
+            <div className="pagination-size">
+
+              <span>
+                Rows:
+              </span>
+
+              <select
+                value={itemsPerPage}
+                onChange={(event) => {
+                  setItemsPerPage(
+                    Number(event.target.value)
+                  );
+
+                  setCurrentPage(1);
+                }}
+              >
+
+                <option value={5}>
+                  5
+                </option>
+
+                <option value={10}>
+                  10
+                </option>
+
+                <option value={20}>
+                  20
+                </option>
+
+                <option value={50}>
+                  50
+                </option>
+
+              </select>
+
+            </div>
+
+
+            {/* PAGINATION */}
+
+            {totalPages > 1 && (
+
+              <div className="pagination-controls">
+
+                {/* PREVIOUS */}
+
+                <button
+                  type="button"
+                  className="pagination-button"
+                  disabled={currentPage === 1}
+                  onClick={() =>
+                    setCurrentPage(
+                      (page) => page - 1
+                    )
+                  }
+                  aria-label="Previous page"
+                >
+                  ‹
+                </button>
+
+
+                {/* PAGE NUMBERS */}
+
+                {Array.from(
+                  { length: totalPages },
+                  (_, index) => index + 1
+                ).map((page) => (
+
+                  <button
+                    type="button"
+                    key={page}
+                    className={
+                      currentPage === page
+                        ? "pagination-button active"
+                        : "pagination-button"
+                    }
+                    onClick={() =>
+                      setCurrentPage(page)
+                    }
+                  >
+                    {page}
+                  </button>
+
+                ))}
+
+
+                {/* NEXT */}
+
+                <button
+                  type="button"
+                  className="pagination-button"
+                  disabled={
+                    currentPage === totalPages
+                  }
+                  onClick={() =>
+                    setCurrentPage(
+                      (page) => page + 1
+                    )
+                  }
+                  aria-label="Next page"
+                >
+                  ›
+                </button>
+
+              </div>
+
+            )}
+
+          </div>
+
+        )}
 
       </section>
 

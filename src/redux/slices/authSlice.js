@@ -66,6 +66,28 @@ export const getProfile = createAsyncThunk(
 );
 
 // ============================================================
+// CHANGE PASSWORD
+// ============================================================
+
+export const changePassword = createAsyncThunk(
+  "auth/changePassword",
+
+  async (passwordData, { rejectWithValue }) => {
+    try {
+      const response =
+        await authService.changePassword(passwordData);
+
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message ||
+          "Password change failed. Please try again."
+      );
+    }
+  });
+
+
+// ============================================================
 // get housekeeping staff
 // ============================================================
 
@@ -255,6 +277,27 @@ builder
 
       .addCase(getProfile.rejected, (state) => {
         state.loading = false;
+      });
+
+      // ============================================================
+// CHANGE PASSWORD
+// ============================================================
+      builder
+      .addCase(changePassword.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+
+      .addCase(changePassword.fulfilled, (state) => {
+        state.loading = false;
+        state.error = null;
+      })
+
+      .addCase(changePassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.payload ||
+          "Password change failed. Please try again.";
       });
 
     // --------------------------------------------------------

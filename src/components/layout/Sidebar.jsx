@@ -13,7 +13,7 @@ const Sidebar = () => {
     { path: "/dashboard", label: "Dashboard", iconName: "LayoutGrid" },
     { path: "/rooms", label: "Room", iconName: "BedDouble" },
     { path: "/bookings", label: "Bookings", iconName: "CalendarCheck" },
-    { path: "/billing", label: "Billing", iconName: "Receipt" },
+    // { path: "/billing", label: "Billing", iconName: "Receipt" },
     { path: "/guests", label: "Guests", iconName: "Users" },
     { path: "/payments", label: "Payments", iconName: "Wallet" },
     { path: "/invoices", label: "Invoices", iconName: "Receipt" },

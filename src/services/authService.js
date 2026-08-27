@@ -33,8 +33,18 @@ const authService = {
 
   getProfile: async () => {
     const response = await apiClient.get(
-      "/users/profile"
+      "/users/me"
     );
+
+    return response.data;
+  },
+
+  // ============================================================
+  // CHANGE PASSWORD
+  // ============================================================
+
+  changePassword: async (data) => {
+    const response = await apiClient.post("/users/change-password", data);
 
     return response.data;
   },

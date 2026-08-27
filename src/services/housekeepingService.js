@@ -41,7 +41,23 @@ const housekeepingService = {
         );
 
         return response.data;
-    }
+    },
+
+    // ============================================================
+    // ASSIGN HOUSEKEEPING TASK TO STAFF
+    // PUT /api/housekeeping/assign/:id
+    // ============================================================
+    assignTaskToStaff: async (id, staffId, notes) => {
+        const response = await apiClient.put(
+            `/housekeeping/assign/${id}`,
+            {
+                assignedTo: staffId,
+                notes,
+            }
+        );
+
+        return response.data;
+    },
 };
 
 export default housekeepingService;

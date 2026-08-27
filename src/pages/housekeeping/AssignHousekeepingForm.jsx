@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getHousekeepingStaff } from "../../redux/slices/authSlice";
+import { assignHousekeepingTask } from "../../redux/slices/housekeepingSlice";
 import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
 
 const AssignHousekeepingForm = ({
   task,
@@ -28,6 +30,7 @@ const AssignHousekeepingForm = ({
       setStaffList(response?.payload?.data || []);
     } catch (error) {
       console.error("Failed to load housekeeping staff:", error);
+      toast.error("Failed to load housekeeping staff");
     }
   };
 
@@ -35,39 +38,33 @@ const AssignHousekeepingForm = ({
     e.preventDefault();
 
     if (!staffId) {
-      alert("Please select housekeeping staff");
+    //   alert("Please select housekeeping staff");
+      toast.error("Please select housekeeping staff");
       return;
     }
 
     try {
       setLoading(true);
 
-      const response = await fetch(
-        `/api/housekeeping/${task._id}/assign`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            assignedTo: staffId,
-            notes,
-          }),
-        }
+      const response = await dispatch(
+        assignHousekeepingTask({
+          id: task._id,
+          staffId,
+          notes,
+        })
       );
+console.log("Assign housekeeping task response:", response);
 
-      const data = await response.json();
-
-      if (!response.ok) {
+      if (!response?.payload?.success) {
         throw new Error(
-          data.message || "Failed to assign housekeeping task"
+          response?.payload?.message || "Failed to assign housekeeping task"
         );
       }
 
       onSuccess();
     } catch (error) {
       console.error(error);
-      alert(error.message);
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }
