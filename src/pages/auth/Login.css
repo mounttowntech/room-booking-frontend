@@ -388,6 +388,180 @@ body,
   font-size: 11px;
 }
 
+.login-forgot-password {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -4px;
+  margin-bottom: 8px;
+}
+
+.forgot-password-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: #f47c2c;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.forgot-password-link:hover {
+  color: #d9651c;
+  text-decoration: underline;
+}
+
+/* ============================================================
+   FORGOT PASSWORD
+============================================================ */
+
+.forgot-password-card {
+  min-height: 500px;
+}
+
+/* Header text */
+
+.forgot-password-card .login-header p {
+  max-width: 330px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/* ============================================================
+   BACK TO LOGIN
+============================================================ */
+
+.forgot-back-login {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.back-login-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  color: #0d2b4d;
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.back-login-link:hover {
+  color: #f47c2c;
+  transform: translateX(-2px);
+}
+
+
+/* ============================================================
+   FORGOT PASSWORD SUCCESS MESSAGE
+============================================================ */
+
+.forgot-password-card .login-success-message {
+  margin-bottom: 18px;
+}
+
+/* ============================================================
+   RESET PASSWORD
+============================================================ */
+
+.reset-password-card {
+  min-height: 560px;
+}
+
+.reset-password-card .login-header p {
+  max-width: 340px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/* ============================================================
+   PASSWORD REQUIREMENT
+============================================================ */
+
+.password-requirement {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  margin-top: -8px;
+  margin-bottom: 4px;
+
+  font-size: 11px;
+  color: #7b8794;
+}
+
+.password-requirement span {
+  font-size: 15px;
+}
+
+
+/* ============================================================
+   BACK TO LOGIN
+============================================================ */
+
+.forgot-back-login {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.back-login-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  color: #0d2b4d;
+  text-decoration: none;
+
+  transition: color 0.2s ease,
+              transform 0.2s ease;
+}
+
+.back-login-link:hover {
+  color: #f47c2c;
+  transform: translateX(-2px);
+}
+
+
+@media (max-width: 768px) {
+
+  .reset-password-card {
+    min-height: auto;
+  }
+
+  .reset-password-card .login-header p {
+    max-width: 100%;
+  }
+}
+
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+
+@media (max-width: 768px) {
+  .forgot-password-card {
+    min-height: auto;
+  }
+
+  .forgot-password-card .login-header p {
+    max-width: 100%;
+  }
+}
+
 /* ========================================================
    RESPONSIVE
 ======================================================== */

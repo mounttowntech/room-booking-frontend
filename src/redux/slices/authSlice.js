@@ -109,6 +109,69 @@ export const getHousekeepingStaff = createAsyncThunk(
 );
 
 // ============================================================
+// forgot PASSWORD
+// ============================================================
+
+export const forgotPassword = createAsyncThunk(
+  "auth/forgotPassword",
+
+  async (forgotPasswordData, { rejectWithValue }) => {
+    try {
+      const response =
+        await authService.forgotPassword(forgotPasswordData);
+
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message ||
+          "Forgot Password failed. Please try again."
+      );
+    }
+  });
+
+  // ============================================================
+// verify forgot PASSWORD otp
+// ============================================================
+
+export const verifyForgotPasswordOtp = createAsyncThunk(
+  "auth/verifyForgotPasswordOtp",
+
+  async (forgotPasswordOtpData, { rejectWithValue }) => {
+    try {
+      const response =
+        await authService.verifyforgotPasswordOtp(forgotPasswordOtpData);
+
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message ||
+          "Verify Password otp failed. Please try again."
+      );
+    }
+  });
+
+  // ============================================================
+// reset PASSWORD
+// ============================================================
+
+export const resetPassword = createAsyncThunk(
+  "auth/resetPassword",
+
+  async (resetPasswordData, { rejectWithValue }) => {
+    try {
+      const response =
+        await authService.resetPassword(resetPasswordData);
+
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message ||
+          "Reset Password change failed. Please try again."
+      );
+    }
+  });
+
+// ============================================================
 // INITIAL STATE
 // ============================================================
 
@@ -119,6 +182,8 @@ const initialState = {
 
   token: localStorage.getItem("hotel_token") || null,
 
+  data:null,
+
   isAuthenticated: Boolean(
     localStorage.getItem("hotel_token")
   ),
@@ -127,6 +192,8 @@ const initialState = {
 
   error: null,
 };
+
+
 
 // ============================================================
 // SLICE
@@ -141,6 +208,7 @@ const authSlice = createSlice({
     logout: (state) => {
       state.user = null;
       state.token = null;
+      state.data = null;
       state.isAuthenticated = false;
       state.error = null;
 
@@ -288,9 +356,10 @@ builder
         state.error = null;
       })
 
-      .addCase(changePassword.fulfilled, (state) => {
+      .addCase(changePassword.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
+        state.data = action.payload;
       })
 
       .addCase(changePassword.rejected, (state, action) => {
@@ -318,6 +387,73 @@ builder
         action.payload ||
         "Failed to fetch housekeeping staff.";
     });
+    // ============================================================
+// forgot PASSWORD
+// ============================================================
+      builder
+      .addCase(forgotPassword.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+
+      .addCase(forgotPassword.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.data = action.payload;
+        state.message = action.payload.message; // Assuming
+      })
+
+      .addCase(forgotPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.payload ||
+          "Password change failed. Please try again.";
+      });
+
+      // ============================================================
+// reset PASSWORD
+// ============================================================
+      builder
+      .addCase(resetPassword.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+
+      .addCase(resetPassword.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.data = action.payload;
+        state.message = action.payload.message; // Assuming
+      })
+
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.payload ||
+          "Password change failed. Please try again.";
+      });
+      // ============================================================
+// verify forgot PASSWORD otp
+// ============================================================
+      builder
+      .addCase(verifyForgotPasswordOtp.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+
+      .addCase(verifyForgotPasswordOtp.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.data = action.payload;
+        state.message = action.payload.message; // Assuming
+      })
+
+      .addCase(verifyForgotPasswordOtp.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.payload ||
+          "Password change failed. Please try again.";
+      });
   },
 });
 

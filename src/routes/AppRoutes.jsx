@@ -18,6 +18,9 @@ import Profile from "../pages/profile/Profile";
 import InvoiceList from "../pages/invoices/InvoiceList";
 import HousekeepingList from "../pages/housekeeping/HousekeepingList";
 import Reports from "../pages/reports/Reports";
+import ForgotPassword from "../pages/forgotPassword/ForgotPassword";
+import ResetPassword from "../pages/resetPassword/ResetPassword";
+
 
 const AppRoutes = () => {
   return (
@@ -30,22 +33,39 @@ const AppRoutes = () => {
         <Route path="/login" element={<Login />} />
 
         <Route path="/register" element={<Register />} />
-
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         {/* =====================================================
             PROTECTED ROUTES
         ===================================================== */}
 
         <Route element={<ProtectedRoute />}>
           <Route element={<MainLayout />}>
+
+            {/* All authenticated users */}
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/rooms" element={<RoomList />} />
-            <Route path="/guests" element={<GuestList />} />
-            <Route path="/bookings" element={<BookingList />} />
-            <Route path="/payments" element={<PaymentList />} />
+
+            {/* Admin + Manager + Receptionist */}
+            <Route  element={<ProtectedRoute allowedRoles={["admin","manager","receptionist"]} /> } >
+              <Route path="/rooms" element={<RoomList />} />
+              <Route path="/guests" element={<GuestList />} />
+              <Route path="/bookings" element={<BookingList />} />
+              <Route path="/payments" element={<PaymentList />} />
+              <Route path="/invoices" element={<InvoiceList />} />
+            </Route>
+
+            {/* Admin + Manager + Housekeeping */}
+            <Route  element={ <ProtectedRoute allowedRoles={["admin","manager","housekeeping",]} /> } >
+              <Route path="/housekeeping" element={<HousekeepingList />} />
+            </Route>
+
+            {/* Admin + Manager only */}
+            <Route element={<ProtectedRoute allowedRoles={["admin","manager",]} /> } >
+              <Route path="/reports" element={<Reports />} />
+            </Route>
+
             <Route path="/profile" element={<Profile />} />
-            <Route path="/invoices" element={<InvoiceList />} />
-            <Route path="/housekeeping" element={<HousekeepingList />} />
-            <Route path="/reports" element={<Reports />} />
+
           </Route>
         </Route>
 

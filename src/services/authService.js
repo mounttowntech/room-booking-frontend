@@ -62,6 +62,33 @@ const authService = {
   },
 
   // ============================================================
+  //forgot password
+  // ============================================================
+  forgotPassword: async (data) => {
+    const response = await apiClient.post("/users/forgot-password", data);
+
+    return response.data;
+  },
+
+  // ============================================================
+  //Verify otp
+  // ============================================================
+  verifyforgotPasswordOtp: async (data) => {
+    const response = await apiClient.post("/users/verify-forgot-password-otp", data);
+
+    return response.data;
+  },
+
+  // ============================================================
+  //reset password
+  // ============================================================
+  resetPassword: async (data) => {
+    const response = await apiClient.post("/users/reset-password", data);
+
+    return response.data;
+  },
+
+  // ============================================================
   // LOGOUT
   // ============================================================
 

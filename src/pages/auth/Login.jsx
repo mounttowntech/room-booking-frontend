@@ -275,6 +275,13 @@ console.log("Login form submitted:", data);
               </div>
             </div>
 
+            {/* FORGOT PASSWORD */}
+            <div className="login-forgot-password">
+              <Link to="/forgot-password" className="forgot-password-link">
+                Forgot Password?
+              </Link>
+            </div>
+
             {/* ERROR MESSAGE */}
             {error && <div className="login-error-message">{error}</div>}
 
