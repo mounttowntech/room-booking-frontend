@@ -135,11 +135,13 @@ const Header = () => {
     const result = dispatch(changePassword(passwordData));
     console.log("Change Password Result:", result);
     if (changePassword.fulfilled.match(result)) {
-        toast.success("Password changed successfully!");
+      toast.success("Password changed successfully!");
     }
 
     if (changePassword.rejected.match(result)) {
-        toast.error(result.payload || "Password change failed. Please try again.");
+      toast.error(
+        result.payload || "Password change failed. Please try again.",
+      );
     }
 
     closePasswordModal();
@@ -271,10 +273,7 @@ const Header = () => {
 
               <div className="avatar-wrapper">
                 <img
-                  src={
-                    user?.avatar ||
-                    profileImageAvatar
-                  }
+                  src={user?.avatar || profileImageAvatar}
                   alt="User Avatar"
                   className="user-avatar"
                 />

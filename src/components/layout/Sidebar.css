@@ -39,7 +39,6 @@
 .logo-icon-wrapper {
   width: 100%;
   height: 48px;
-  /* background-color: var(--color-amber-gold); */
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -127,4 +126,74 @@
 
 .nav-item.active .nav-icon {
   color: var(--color-white);
+}
+
+/* ============ Mobile Hamburger / Close / Overlay ============ */
+
+/* Hamburger button - hidden on desktop */
+.sidebar-hamburger {
+  display: none;
+  position: fixed;
+  top: 13px;
+  left: 9px;
+  z-index: 1100;
+  background-color: var(--color-dark-blue);
+  color: var(--color-white);
+  border: none;
+  border-radius: 8px;
+  padding: 7px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Close button inside sidebar - hidden on desktop */
+.sidebar-close {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--color-white);
+  cursor: pointer;
+  margin-left: auto;
+  padding: 4px;
+}
+
+/* Overlay behind sidebar on mobile */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+}
+
+/* ===== Mobile breakpoint ===== */
+@media (max-width: 768px) {
+  .sidebar-hamburger {
+    display: flex;
+  }
+
+  .sidebar-close {
+    display: block;
+  }
+
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    width: 240px;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.4);
+  }
+
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
 }
